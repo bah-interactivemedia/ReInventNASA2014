@@ -15,8 +15,7 @@ angular.module('controllers', [])
 							image: function(){
 								var modalImage = image[0];
 
-								// Set Saluted
-								$.inArray(parseInt(modalImage.id), $rootScope.existingUserLikes) >= 0 ? modalImage.saluted = true : modalImage.saluted = false;
+								console.log(modalImage);
 
 								// Set post date
 								var t = (modalImage.created_on).split(/[- :]/);
