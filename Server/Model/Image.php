@@ -114,8 +114,8 @@ class Image extends DataObject {
 			array_push($idArray, rand(0,$maxID['maxID']));
 		}
 
-		App::getDBO()->prepare('SELECT * FROM images WHERE id IN (?)');
-		$images = App::getDBO()->execute(array($idArray))->fetchAll(\PDO::FETCH_CLASS);
+		App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).')');
+		$images = App::getDBO()->execute()->fetchAll(\PDO::FETCH_CLASS);
 
 		return $images;
 	}

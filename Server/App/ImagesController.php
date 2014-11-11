@@ -80,4 +80,13 @@ class ImagesController extends Controller {
 			}
 		}
 	}
+
+	/**
+	 * @param int $limit
+	 * @return Image[]
+	 */
+
+	public function action_getImages($limit){
+		return Image::getImages($limit);
+	}
 }
