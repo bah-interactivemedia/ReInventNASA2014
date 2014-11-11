@@ -58,25 +58,39 @@ class ImagesController extends Controller {
 	 * @return bool
 	 */
 	public function action_putImagesInDB(){
-		$jsonURL = "https://merpublic.s3.amazonaws.com/oss/mera/images/image_manifest.json";
-		$json = file_get_contents($jsonURL);
-		$data = json_decode($json, TRUE);
+		$nasaJSONURL = 'http://json.jpl.nasa.gov/data.json';
+		$nasaJSON = file_get_contents($nasaJSONURL);
+		$nasaJSONdata = json_decode($nasaJSON, TRUE);
 
-		foreach ($data['sols'] as $sol){
-			$currentSol = $sol['sol'];
-			$solJSONURL = $sol['url'];
-			$solJSON = file_get_contents($solJSONURL);
-			$solData = json_decode($solJSON, TRUE);
+		foreach($nasaJSONdata as $mission => $jsonFile){
+			$json = file_get_contents($jsonFile['image_manifest']);
+			$data = json_decode($json, TRUE);
 
-			foreach($solData['pcam_images'] as $solImage){
-				foreach($solImage['images'] as $pcamImage){
-					Image::createImage(
-						$pcamImage['imageid'],
-						$pcamImage['url'],
-						$pcamImage['camera_model']['camera_vector'][0],
-						$pcamImage['camera_model']['camera_vector'][1],
-						$pcamImage['camera_model']['camera_vector'][2],
-						$pcamImage['time']['creation_timestamp_utc']);
+			foreach ($data['sols'] as $sol){
+				$currentSol = $sol['sol'];
+				$solJSONURL = $sol['url'];
+				$solJSON = file_get_contents($solJSONURL);
+				$solData = json_decode($solJSON, TRUE);
+
+				foreach($solData['pcam_images'] as $solImage){
+					foreach($solImage['images'] as $pcamImage){
+						if ($pcamImage['color_url'] != null){
+							$url = $pcamImage['color_url'];
+						} else {
+							$url = $pcamImage['url'];
+						}
+
+						Image::createImage(
+							$pcamImage['imageid'],
+							$url,
+							$pcamImage['camera_model']['camera_vector'][0],
+							$pcamImage['camera_model']['camera_vector'][1],
+							$pcamImage['camera_model']['camera_vector'][2],
+							$pcamImage['dimensions']['area'][0],
+							$pcamImage['dimensions']['area'][1],
+							$mission,
+							$pcamImage['time']['creation_timestamp_utc']);
+					}
 				}
 			}
 		}
