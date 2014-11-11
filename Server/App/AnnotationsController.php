@@ -66,9 +66,10 @@ class AnnotationsController extends Controller {
 	/** Annotates an image
 	 * @param int $image
 	 * @param string $annotationBlob
+	 * @param string $category
 	 * @return Annotation
 	 */
-	public function action_annotateImage($image, $annotationBlob){
-		return Annotation::annotateImage($image, $annotationBlob);
+	public function action_annotateImage($image, $annotationBlob, $category){
+		return Annotation::annotateImage($image, $annotationBlob, $category);
 	}
 }

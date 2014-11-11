@@ -80,10 +80,11 @@ class Annotation extends DataObject {
 	 * @param $annotationBlob
 	 * @return Annotation
 	 */
-	public static function annotateImage($image, $annotationBlob){
+	public static function annotateImage($image, $annotationBlob, $category){
 		$annotation = new self();
 		$annotation->imageId = $image;
 		$annotation->annotation = $annotationBlob;
+		$annotation->category = $category;
 
 		$annotation->save();
 

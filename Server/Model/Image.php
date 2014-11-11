@@ -87,10 +87,13 @@ class Image extends DataObject {
 
 	/**
 	 * @param $id
-	 * @param string $url
+	 * @param $url
 	 * @param $vector_x
 	 * @param $vector_y
 	 * @param $vector_z
+	 * @param $width
+	 * @param $height
+	 * @param $mission
 	 * @param $created_on
 	 * @return array
 	 */
@@ -116,10 +119,11 @@ class Image extends DataObject {
 
 	/**
 	 * Gets $limit number of images
-	 * @param  int $limit  number of images
-	 * @return array $images 	Images
+	 * @param int $limit
+	 * @param string $category
+	 * @return array $images
 	 */
-	static function getImages($limit){
+	static function getImages($limit, $category = 'all'){
 		$idArray = [];
 
 		App::getDBO()->prepare('SELECT MIN(id) as minID, MAX(id) as maxID FROM images');
@@ -129,7 +133,13 @@ class Image extends DataObject {
 			array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
 		}
 
-		App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
+		if ($category != 'all'){
+			App::getDBO()->prepare('SELECT * FROM images i INNER JOIN annotations a on i.id = a.imageID
+				WHERE i.id IN ('.implode(",",$idArray).') AND width = 1024 AND a.category = "'.$category.'"');
+		} else {
+			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
+		}
+
 		$images = App::getDBO()->execute()->fetchAll(\PDO::FETCH_CLASS);
 
 		return $images;
