@@ -5,9 +5,6 @@
 Options +FollowSymLinks
 RewriteEngine On
 
-RewriteCond %{HTTP:X-Forwarded-Proto} =http
-RewriteRule ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]
-
 # These folders will be directly accessible without any interference from Mudpuppy. If you don't want anything
 # to be accessible prior to authentication, comment this out and do manual pass-through as needed.
 RewriteCond %{REQUEST_URI} !^/content/
