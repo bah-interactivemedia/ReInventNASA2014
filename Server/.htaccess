@@ -1,0 +1,20 @@
+#=======================================================================================================================
+# This file is part of the Mudpuppy PHP framework, released under the MIT License. See LICENSE for full details.
+#=======================================================================================================================
+
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
+RewriteRule ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R=301]
+
+# These folders will be directly accessible without any interference from Mudpuppy. If you don't want anything
+# to be accessible prior to authentication, comment this out and do manual pass-through as needed.
+RewriteCond %{REQUEST_URI} !^/content/
+
+# Always let the favicon and robots.txt through
+RewriteCond %{REQUEST_URI} !^/(favicon.ico|favicon.png|robots.txt|crossdomain.xml)$
+
+# Everything else goes to the index
+RewriteCond %{REQUEST_URI} !^/index.php/
+RewriteRule ^(.*)$ index.php/$1 [L,QSA]

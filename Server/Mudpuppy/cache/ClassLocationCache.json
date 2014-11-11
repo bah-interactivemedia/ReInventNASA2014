@@ -1,0 +1,88 @@
+{
+    "mudpuppy": {
+        "app": "Mudpuppy\/App.php",
+        "config": "Mudpuppy\/Config.php",
+        "controller": "Mudpuppy\/Controller.php",
+        "cookie": "Mudpuppy\/Cookie.php",
+        "dataobject": "Mudpuppy\/DataObject.php",
+        "dataobjectcontroller": "Mudpuppy\/DataObjectController.php",
+        "database": "Mudpuppy\/Database.php",
+        "datehelper": "Mudpuppy\/DateHelper.php",
+        "file": "Mudpuppy\/File.php",
+        "inflector": "Mudpuppy\/Inflector.php",
+        "jsmin": "Mudpuppy\/JSMin.php",
+        "ldap": "Mudpuppy\/Ldap.php",
+        "log": "Mudpuppy\/Log.php",
+        "mudpuppyexception": "Mudpuppy\/MudpuppyException.php",
+        "pagecontroller": "Mudpuppy\/PageController.php",
+        "request": "Mudpuppy\/Request.php",
+        "security": "Mudpuppy\/Security.php",
+        "session": "Mudpuppy\/Session.php",
+        "mudpuppy": "Mudpuppy\/mudpuppy.php"
+    },
+    "mudpuppy\/model": {
+        "debuglog": "Mudpuppy\/Model\/DebugLog.php"
+    },
+    "mudpuppy\/admin": {
+        "admincontroller": "Mudpuppy\/Admin\/AdminController.php",
+        "adminview": "Mudpuppy\/Admin\/AdminView.php"
+    },
+    "mudpuppy\/admin\/app": {
+        "appcontroller": "Mudpuppy\/Admin\/App\/AppController.php",
+        "appview": "Mudpuppy\/Admin\/App\/AppView.php"
+    },
+    "mudpuppy\/admin\/install": {
+        "installcontroller": "Mudpuppy\/Admin\/Install\/InstallController.php",
+        "installview": "Mudpuppy\/Admin\/Install\/InstallView.php"
+    },
+    "mudpuppy\/admin\/log": {
+        "logcontroller": "Mudpuppy\/Admin\/Log\/LogController.php",
+        "logview": "Mudpuppy\/Admin\/Log\/LogView.php"
+    },
+    "mudpuppy\/admin\/content": [
+
+    ],
+    "mudpuppy\/admin\/content\/bootstrap": [
+
+    ],
+    "mudpuppy\/admin\/content\/bootstrap\/css": [
+
+    ],
+    "mudpuppy\/admin\/content\/bootstrap\/fonts": [
+
+    ],
+    "mudpuppy\/admin\/content\/bootstrap\/js": [
+
+    ],
+    "mudpuppy\/admin\/content\/css": [
+
+    ],
+    "mudpuppy\/admin\/content\/images": [
+
+    ],
+    "mudpuppy\/admin\/content\/js": [
+
+    ],
+    "app": {
+        "imagescontroller": "App\/ImagesController.php",
+        "messagescontroller": "App\/MessagesController.php",
+        "nasajpl": "App\/NASAJPL.php",
+        "permissions": "App\/Permissions.php",
+        "rootcontroller": "App\/RootController.php",
+        "rootview": "App\/RootView.php",
+        "security": "App\/Security.php"
+    },
+    "app\/tests": {
+        "controller": "App\/Tests\/Controller.php",
+        "view": "App\/Tests\/View.php"
+    },
+    "app\/tests\/files": [
+
+    ],
+    "app\/tests\/files\/tests": [
+
+    ],
+    "model": {
+        "image": "Model\/Image.php"
+    }
+}
