@@ -25,6 +25,7 @@ defined('MUDPUPPY') or die('Restricted');
  * @property string vector_x
  * @property string vector_y
  * @property string vector_z
+ * @property int created_on
  * 
  * Foreign Key Lookup Properties
  * #END MAGIC PROPERTIES
@@ -40,6 +41,7 @@ class Image extends DataObject {
 		$this->createColumn('vector_x', DATATYPE_DECIMAL, NULL, false, 0);
 		$this->createColumn('vector_y', DATATYPE_DECIMAL, NULL, false, 0);
 		$this->createColumn('vector_z', DATATYPE_DECIMAL, NULL, false, 0);
+		$this->createColumn('created_on', DATATYPE_DATETIME, NULL, false, 0);
 
 		// Foreign Key Lookups
 		// #END DEFAULTS
@@ -83,9 +85,10 @@ class Image extends DataObject {
 	 * @param $vector_x
 	 * @param $vector_y
 	 * @param $vector_z
+	 * @param $created_on
 	 * @return array
 	 */
-	static function createImage($id, $url, $vector_x, $vector_y, $vector_z){
+	static function createImage($id, $url, $vector_x, $vector_y, $vector_z, $created_on){
 		// Insert image record into database
 		$image = new self();
 		$image->url		= $url;
@@ -93,6 +96,7 @@ class Image extends DataObject {
 		$image->vector_x = $vector_x;
 		$image->vector_y = $vector_y;
 		$image->vector_z = $vector_z;
+		$image->created_on = $created_on;
 
 		$image->save();
 

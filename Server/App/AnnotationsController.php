@@ -8,11 +8,12 @@ namespace App;
 use Mudpuppy\Controller;
 use Mudpuppy\DataObjectController;
 use Mudpuppy\MudpuppyException;
+use Model\Annotation;
 use Model\Image;
 
 defined('MUDPUPPY') or die('Restricted');
 
-class ImagesController extends Controller {
+class AnnotationsController extends Controller {
 	use DataObjectController;
 
 	public function getRequiredPermissions() {
@@ -54,40 +55,20 @@ class ImagesController extends Controller {
 //	}
 
 	/**
-	 * Put Images in DB
-	 * @return bool
+	 * Get annotations by image
+	 * @param int $image
+	 * @return array
 	 */
-	public function action_putImagesInDB(){
-		$jsonURL = "https://merpublic.s3.amazonaws.com/oss/mera/images/image_manifest.json";
-		$json = file_get_contents($jsonURL);
-		$data = json_decode($json, TRUE);
-
-		foreach ($data['sols'] as $sol){
-			$currentSol = $sol['sol'];
-			$solJSONURL = $sol['url'];
-			$solJSON = file_get_contents($solJSONURL);
-			$solData = json_decode($solJSON, TRUE);
-
-			foreach($solData['pcam_images'] as $solImage){
-				foreach($solImage['images'] as $pcamImage){
-					Image::createImage(
-						$pcamImage['imageid'],
-						$pcamImage['url'],
-						$pcamImage['camera_model']['camera_vector'][0],
-						$pcamImage['camera_model']['camera_vector'][1],
-						$pcamImage['camera_model']['camera_vector'][2],
-						$pcamImage['time']['creation_timestamp_utc']);
-				}
-			}
-		}
+	public function action_getImageAnnotations($image){
+		return Annotation::getImageAnnotations($image);
 	}
 
-	/**
-	 * @param int $limit
-	 * @return Image[]
+	/** Annotates an image
+	 * @param int $image
+	 * @param string $annotationBlob
+	 * @return Annotation
 	 */
-
-	public function action_getImages($limit){
-		return Image::getImages($limit);
+	public function action_annotateImage($image, $annotationBlob){
+		return Annotation::annotateImage($image, $annotationBlob);
 	}
 }
