@@ -120,7 +120,7 @@ class Image extends DataObject {
 	/**
 	 * Gets $limit number of images
 	 * @param int $limit
-	 * @param string $category
+	 * @param string $sort
 	 * @return array $images
 	 */
 	static function getImages($limit, $sort = 'all'){

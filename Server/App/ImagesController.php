@@ -97,8 +97,8 @@ class ImagesController extends Controller {
 	}
 
 	/**
-	 * @param $limit
-	 * @param $sort
+	 * @param int $limit
+	 * @param string $sort
 	 * @return array
 	 */
 	public function action_getImages($limit, $sort){
