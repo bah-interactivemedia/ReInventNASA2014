@@ -26,7 +26,7 @@ use Mudpuppy\App;
 	</nav>
 </div>
 
-<div class="logo" tabindex="-1">
+<div class="logo">
 	<div class="row">
 		<div class="large-12 columns">
 			<img src="content/images/logo_nasa_trio_black.png" />

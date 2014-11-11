@@ -2,10 +2,10 @@
 		<div class="sort">
 			<div class="row">
 				<div class="large-12 columns sortLinks">
-					<a href="#" ng-click="imageSort('recent')" class="active button large" tabindex="0">Most Recent</a>
-					<a href="#" ng-click="imageSort('salutes')" class="button large" tabindex="0">Most Salutes</a>
-					<a href="#" ng-click="imageSort('featured')" class="button large featuredButton" tabindex="0">Featured</a>
-					<a href="#" ng-click="imageSort('trending')" class="button large" tabindex="0">Trending</a>
+					<a href="#" ng-click="imageSort('all')" class="active button large" tabindex="0">All Images</a>
+					<a href="#" ng-click="imageSort('layered')" class="button large" tabindex="0">Layered</a>
+					<a href="#" ng-click="imageSort('blueberries')" class="button large" tabindex="0">Blueberries</a>
+					<a href="#" ng-click="imageSort('brightRocks')" class="button large" tabindex="0">Bright Rocks</a>
 				</div>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 						<div class="imageModalBody">
 							<img ng-src="{{modalImage.url}}" alt="{{modalImage.message}}" />
 							<div class="imageModalStats">
-								<span class="right"><img src="content/images/clock.png" alt="Clock icon" /><em>Posted {{modalImage.daysAgo}}</em></span>
+								<span class="right"><img src="content/images/clock.png" alt="Clock icon" /><em>Taken {{modalImage.daysAgo}}</em></span>
 							</div>
 							<p class="imageModalCaption">{{modalImage.message}}</p>
 						</div>

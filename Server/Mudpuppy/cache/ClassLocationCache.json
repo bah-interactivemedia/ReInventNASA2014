@@ -64,6 +64,7 @@
 
     ],
     "app": {
+        "annotationscontroller": "App\/AnnotationsController.php",
         "imagescontroller": "App\/ImagesController.php",
         "messagescontroller": "App\/MessagesController.php",
         "nasajpl": "App\/NASAJPL.php",
@@ -83,6 +84,7 @@
 
     ],
     "model": {
+        "annotation": "Model\/Annotation.php",
         "image": "Model\/Image.php"
     }
 }

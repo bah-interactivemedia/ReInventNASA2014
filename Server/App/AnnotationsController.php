@@ -8,11 +8,12 @@ namespace App;
 use Mudpuppy\Controller;
 use Mudpuppy\DataObjectController;
 use Mudpuppy\MudpuppyException;
+use Model\Annotation;
 use Model\Image;
 
 defined('MUDPUPPY') or die('Restricted');
 
-class ImagesController extends Controller {
+class AnnotationsController extends Controller {
 	use DataObjectController;
 
 	public function getRequiredPermissions() {
@@ -54,54 +55,21 @@ class ImagesController extends Controller {
 //	}
 
 	/**
-	 * Put Images in DB
-	 * @return bool
-	 */
-	public function action_putImagesInDB(){
-		$nasaJSONURL = 'http://json.jpl.nasa.gov/data.json';
-		$nasaJSON = file_get_contents($nasaJSONURL);
-		$nasaJSONdata = json_decode($nasaJSON, TRUE);
-
-		foreach($nasaJSONdata as $mission => $jsonFile){
-			$json = file_get_contents($jsonFile['image_manifest']);
-			$data = json_decode($json, TRUE);
-
-			foreach ($data['sols'] as $sol){
-				$currentSol = $sol['sol'];
-				$solJSONURL = $sol['url'];
-				$solJSON = file_get_contents($solJSONURL);
-				$solData = json_decode($solJSON, TRUE);
-
-				foreach($solData['pcam_images'] as $solImage){
-					foreach($solImage['images'] as $pcamImage){
-						if ($pcamImage['color_url'] != null){
-							$url = $pcamImage['color_url'];
-						} else {
-							$url = $pcamImage['url'];
-						}
-
-						Image::createImage(
-							$pcamImage['imageid'],
-							$url,
-							$pcamImage['camera_model']['camera_vector'][0],
-							$pcamImage['camera_model']['camera_vector'][1],
-							$pcamImage['camera_model']['camera_vector'][2],
-							$pcamImage['dimensions']['area'][0],
-							$pcamImage['dimensions']['area'][1],
-							$mission,
-							$pcamImage['time']['creation_timestamp_utc']);
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * @param int $limit
-	 * @param string $sort
+	 * Get annotations by image
+	 * @param int $image
 	 * @return array
 	 */
-	public function action_getImages($limit, $sort){
-		return Image::getImages($limit, $sort);
+	public function action_getImageAnnotations($image){
+		return Annotation::getImageAnnotations($image);
+	}
+
+	/** Annotates an image
+	 * @param int $image
+	 * @param string $annotationBlob
+	 * @param string $category
+	 * @return Annotation
+	 */
+	public function action_annotateImage($image, $annotationBlob, $category){
+		return Annotation::annotateImage($image, $annotationBlob, $category);
 	}
 }
