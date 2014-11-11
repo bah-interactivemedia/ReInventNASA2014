@@ -15,7 +15,8 @@ defined('MUDPUPPY') or die('Restricted');
  * #BEGIN MAGIC PROPERTIES
  * @property int id
  * @property int imageId
- * @property string annotation
+ * @property string annotations
+ * @property string category
  * 
  * Foreign Key Lookup Properties
  * @property Image image
@@ -28,7 +29,8 @@ class Annotation extends DataObject {
 		// #BEGIN DEFAULTS
 		$this->createColumn('id', DATATYPE_INT, NULL, true, 0);
 		$this->createColumn('imageId', DATATYPE_INT, NULL, true, 0);
-		$this->createColumn('annotation', DATATYPE_BINARY, NULL, false, 65536);
+		$this->createColumn('annotations', DATATYPE_BINARY, NULL, false, 65536);
+		$this->createColumn('category', DATATYPE_STRING, NULL, false, 100);
 
 		// Foreign Key Lookups
 		$this->createLookup('imageId', 'image', 'Model\Image');

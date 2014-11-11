@@ -19,7 +19,7 @@ angular.module('controllers', [])
 								$.inArray(parseInt(modalImage.id), $rootScope.existingUserLikes) >= 0 ? modalImage.saluted = true : modalImage.saluted = false;
 
 								// Set post date
-								var t = (modalImage.approveDate).split(/[- :]/);
+								var t = (modalImage.created_on).split(/[- :]/);
 								var approveDate = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]).getTime();
 								var today = new Date().getTime();
 								var timeDiff = today-approveDate;
