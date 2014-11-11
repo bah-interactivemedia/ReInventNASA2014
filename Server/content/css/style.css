@@ -50,10 +50,10 @@ body {
       padding-right: 26px; }
     .sort .row .sortLinks a:not(.socialLink) {
       background: #E4E9EF;
-      color: #4C4C4C; }
+      color: #4A698E; }
     .sort .row .sortLinks a:hover:not(.socialLink), .sort .row .sortLinks a.active {
       background: #738395;
-      color: #A5A6A7; }
+      color: #FFF; }
     .sort .row .socialLinks {
       display: inline; }
       .sort .row .socialLinks .socialLink {
@@ -62,7 +62,6 @@ body {
         margin-right: 10px; }
 
 .images {
-  background-image: url("/content/images/banner_bg.png");
   background-repeat: no-repeat;
   background-size: 100%; }
   .images #imageContainer {
@@ -132,7 +131,8 @@ body {
       height: 32px;
       line-height: 32px;
       margin: 5px;
-      background: #A5A6A7; }
+      color: #FFF;
+      background: #4A698E; }
 
 .reveal-modal {
   background: #E4E9EF; }

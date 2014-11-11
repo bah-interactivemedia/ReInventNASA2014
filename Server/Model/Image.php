@@ -78,10 +78,12 @@ class Image extends DataObject {
 	/**************** Image Creation ***************/
 
 	/**
-	 * Creates an image
 	 * @param $id
-	 * @param $url
-	 * @return string
+	 * @param string $url
+	 * @param $vector_x
+	 * @param $vector_y
+	 * @param $vector_z
+	 * @return array
 	 */
 	static function createImage($id, $url, $vector_x, $vector_y, $vector_z){
 		// Insert image record into database

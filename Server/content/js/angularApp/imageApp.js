@@ -15,10 +15,6 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'content/partials/imageApp.html',
                 controller: 'imagesController'
             })
-			.when('/terms', {
-				templateUrl: 'content/partials/imageApp.html',
-				controller: 'imagesController'
-			})
             .otherwise({
 				templateUrl: 'content/partials/imageApp.html',
 				controller: 'imagesController'

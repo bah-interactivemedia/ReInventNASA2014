@@ -14,20 +14,9 @@
 			<div class="row">
 				<div masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".image"}' id="imageContainer" class="large-12 columns" infinite-scroll="images.nextPage();addthis.button('.addthis_button_compact');" infinite-scroll-distance="1" infinite-scroll-disabled='images.busy'>
 					<div image-tile class="image {{image | getSizeClass}} {{image | getIsSortedByFeatured}}" ng-repeat="image in images.items">
-						<img alt="{{image.message}}" tabindex="0" ng-mouseover="showOverlay(image)" ng-enter="openImageModal(image, $index)" ng-click="openImageModal(image, $index)" ng-src="https://s3.amazonaws.com/realwarriors_user_processed_images/{{image.url}}{{image | getSize}}.jpg" ng-src-responsive="[['(max-width:40em)', 'https://s3.amazonaws.com/realwarriors_user_processed_images/{{image.url}}_m.jpg']]"/>
-						<div class="saluteOverlay">
-							<img alt="Salute star icon" ng-src="{{image | getStarImage}}" /><em>{{ image.likes }}</em>
-						</div>
+						<img alt="{{image.message}}" tabindex="0" ng-mouseover="showOverlay(image)" ng-enter="openImageModal(image, $index)" ng-click="openImageModal(image, $index)" ng-src="{{image.url}}" ng-src-responsive="[['(max-width:40em)', '{{image.url}}']]"/>
 						<div class="imageOverlay">
 							<div class="overlay" ng-click="openImageModal(image, $index)" tabindex="0"></div>
-							<a ng-click="salute(image)" tabindex="0">
-								<img class="saluteButton {{image | getSaluteOpacity}}" src="content/images/salute.png" alt="Salute this image" />
-							</a>
-							<div addthis-toolbox url="{{image.shortURL}}" addthis:url="{{image.shortURL}}" addthis:title="Real Strength" imageid="{{image.id}}" class="addthis_toolbox addthis_default_style addthis_32x32_style" id="addThis{{image.id}}">
-								<a class="addthis_button_compact" ng-click="resetAddThis()" tabindex="0">
-									<img class="shareButton" src="content/images/share.png" alt="Share this image" />
-								</a>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -38,16 +27,12 @@
 				<!-- Image modal template -->
 				<script type="text/ng-template" id="imageModal.html">
 					<div id="imageModal" tabindex="0">
-						<div class="imageModalHeader" >
-							<a ng-mouseenter="expression"="modalSalute(modalImage)" ng-click="modalSalute(modalImage)"  tabindex="0" ><img ng-src="content/images/salute.png" class="{{modalImage | getSaluteOpacity}}" alt="Salute this image" /></a>
-							<div addthis-modal-toolbox url="{{modalImage.shortURL}}" class="addthis_toolbox addthis_default_style addthis_32x32_style modalShareHolder">
-								<a class="addthis_button_compact modalShare"><img ng-enter="share508()" class="shareButton" src="content/images/share.png" alt="Share this image" tabindex="0"/></a>
-							</div>
+						<div class="imageModalHeader">
+
 						</div>
 						<div class="imageModalBody">
-							<img ng-src="https://s3.amazonaws.com/realwarriors_user_processed_images/{{modalImage.url}}_l.jpg" alt="{{modalImage.message}}" />
+							<img ng-src="{{modalImage.url}}" alt="{{modalImage.message}}" />
 							<div class="imageModalStats">
-								<span><img ng-src="{{modalImage | getModalStarImage}}" alt="Salute star icon" /><em>{{modalImage.likes}} Salutes</em></span>
 								<span class="right"><img src="content/images/clock.png" alt="Clock icon" /><em>Posted {{modalImage.daysAgo}}</em></span>
 							</div>
 							<p class="imageModalCaption">{{modalImage.message}}</p>
@@ -60,12 +45,8 @@
 						<div class="rightArrow" ng-hide="hideRight">
 							<a ng-enter="showNextImage(modalImage)" ng-click="showNextImage(modalImage)" tabindex="0"><img src="content/images/right_arrow.png" alt="Right arrow" /></a>
 						</div>
-						<div class="reportImageLink hide-for-touch">
-							<a ng-enter="modalReport(modalImage)" ng-click="modalReport(modalImage)" tabindex="0" ng-focus="keydown()">Report Image</a>
-						</div>
 					</div>
 					<div class="phoneCloseModalButton button show-for-touch" ng-click="cancel()" tabindex="0">Close</div>
-					<div class="reportImageButton show-for-touch text-center" id="last"  tabindex="0"><a>Report Image</a></div>
 				</script>
 			</div>
 		</div>

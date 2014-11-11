@@ -1,17 +1,4 @@
 angular.module('imagesService', [])
-	.factory('LikeImage', ['$resource', 'APIURL', function($resource, APIURL){
-		return $resource(APIURL+'likeImage', {}, {
-			post: {method: 'POST', params:{}, isArray:false}
-		});
-	}])
-	.factory('FlagImage', ['$resource', 'APIURL', function($resource, APIURL){
-		return $resource(APIURL+'flagImage', {}, {
-			post: {method: 'POST', params:{}, isArray:false}
-		});
-	}])
-	.factory('GetUserLikes', ['$resource', 'APIURL', function($resource, APIURL){
-		return $resource(APIURL+'getLikes', {}, {});
-	}])
 	.factory('GetImage', ['$resource', 'APIURL', function($resource, APIURL){
 		return $resource(APIURL+'getImage', {}, {});
 	}])
@@ -47,9 +34,7 @@ angular.module('imagesService', [])
 					this.busy = true;
 				} else {
 					for (var i = 0; i < data.length; i++) {
-						// Set Saluted
-						$.inArray(parseInt(data[i].id), $rootScope.existingUserLikes) >= 0 ? data[i].saluted = true : data[i].saluted = false;
-
+						/*
 						// Set post date
 						var t = (data[i].approveDate).split(/[- :]/);
 						var approveDate = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]).getTime();
@@ -63,7 +48,7 @@ angular.module('imagesService', [])
 							data[i].daysAgo = daysAgo + " days ago";
 						} else {
 							data[i].daysAgo = Math.floor(daysAgo/365) + " years ago";
-						}
+						}*/
 
 						this.items.push(data[i]);
 					}

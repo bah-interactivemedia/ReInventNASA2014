@@ -1,8 +1,8 @@
 angular.module('controllers', [])
-	.controller('imagesController', function($scope, $rootScope, $modal, $routeParams, $location, LikeImage, FlagImage, GetUserLikes, LoadImages, GetImage, ViewImage) {
+	.controller('imagesController', function($scope, $rootScope, $modal, $routeParams, $location, LoadImages, GetImage, ViewImage) {
 		$rootScope.loadingText = 'Load More';
 		
-		// Checks if the route is looking for a specific image 
+		// Checks if the route is looking for a specific image
 		// Loads a model with the given image information
 		if($routeParams.id !== undefined){
 			GetImage.query({id: $routeParams.id})
@@ -45,19 +45,8 @@ angular.module('controllers', [])
 							}
 						}
 					});
-				});			
-		} else if ($location.path() == '/terms'){
-			$('#termsOfServiceModalLink').click();
-		}
-
-		// Get all Likes from this user's IP address
-		$rootScope.existingUserLikes = [];
-		var queryExistingLikes = GetUserLikes.query()
-			.$promise.then(function(response){
-				$.each(response, function(i,v){
-					$rootScope.existingUserLikes.push(parseInt(v.likeImageId));
 				});
-			});
+		}
 
 		// Set default image params for querying
 		$scope.limit = 50;
@@ -96,25 +85,9 @@ angular.module('controllers', [])
 			$(this).addClass("active");
 		});
 
-		// Delete AddThis iFrame due to concatenation bug in AddThis
-		$scope.resetAddThis = function(){
-			$("#at3win").remove();
-			$("#at3lb").remove();
-		};
-
 		// TODO What is this
 		$scope.showOverlay = function(image){
 			$scope.show = false;
-		};
-
-		// Salute functionality from Wall
-		$scope.salute = function(image){
-			if (!($.inArray(parseInt(image.id), $rootScope.existingUserLikes) >= 0)){
-				LikeImage.post({image: image.id});
-				$rootScope.existingUserLikes.push(parseInt(image.id));
-				image.saluted = true;
-				image.likes++;
-			}
 		};
 
 		// Open modal
@@ -158,23 +131,6 @@ angular.module('controllers', [])
 				checkArrows();
 			}
 
-
-			$scope.modalSalute = function(modalImage){
-				if (!($.inArray(parseInt(modalImage.id), $rootScope.existingUserLikes) >= 0)){
-					LikeImage.post({image: modalImage.id});
-					$rootScope.existingUserLikes.push(parseInt(modalImage.id));
-					modalImage.saluted = true;
-					modalImage.likes++;
-				}
-			};
-
-			$scope.modalReport = function(modalImage) {
-				if(confirm("Are you sure you want to report this image?")){
-					FlagImage.post({image:modalImage.id});
-					$modalInstance.close();
-				}
-			};
-
 			$scope.showPrevImage = function(modalImage){
 				if($scope.modalIndex > 0){
 					$scope.modalIndex--; 
@@ -182,7 +138,6 @@ angular.module('controllers', [])
 
 					checkArrows();
 				}
-
 			};
 
 			$scope.share508 = function(){

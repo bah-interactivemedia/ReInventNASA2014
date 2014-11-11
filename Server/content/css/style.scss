@@ -96,11 +96,11 @@ body {
 			}
 			a:not(.socialLink){
 				background: $accent_blue;
-				color: $dark_grey;
+				color: $medium_blue;
 			}
 			a:hover:not(.socialLink), a.active{
 				background: $light_blue;
-				color: $light_grey;
+				color: $white;
 			}
 		}
 		.socialLinks{
@@ -116,7 +116,6 @@ body {
 }
 
 .images{
-	background-image: url('/content/images/banner_bg.png');
 	background-repeat: no-repeat;
 	background-size:100%;
 	#imageContainer{
@@ -199,7 +198,8 @@ body {
 			height: 32px;
 			line-height: 32px;
 			margin:5px;
-			background: $light_grey;
+			color: $white;
+			background: $medium_blue;
 		}
 	}
 }

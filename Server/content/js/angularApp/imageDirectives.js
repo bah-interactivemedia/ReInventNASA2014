@@ -61,32 +61,4 @@ angular.module('imageDirectives',['ng'])
 				}
 			})
 		}
-	})
-	.directive('addthisToolbox', ['$timeout', function($timeout) {
-		return {
-			restrict: 'A',
-			transclude: true,
-			replace: true,
-			template: '<div ng-transclude></div>',
-			link: function($scope, element, attrs) {
-				$timeout(function () {
-					addthis.init();
-					addthis.button('#addThis'+attrs.imageid, {}, {url: attrs.url});
-				});
-			}
-		}
-	}])
-	.directive('addthisModalToolbox', ['$timeout', function($timeout) {
-		return {
-			restrict: 'A',
-			transclude: true,
-			replace: true,
-			template: '<div ng-transclude></div>',
-			link: function($scope, element, attrs) {
-				$timeout(function () {
-					addthis.init();
-					addthis.button('.modalShareHolder', {}, {url: attrs.url});
-				});
-			}
-		}
-	}]);
+	});
