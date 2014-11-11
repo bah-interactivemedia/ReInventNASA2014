@@ -123,7 +123,7 @@ class Image extends DataObject {
 	 * @param string $category
 	 * @return array $images
 	 */
-	static function getImages($limit, $category = 'all'){
+	static function getImages($limit, $sort = 'all'){
 		$idArray = [];
 
 		App::getDBO()->prepare('SELECT MIN(id) as minID, MAX(id) as maxID FROM images');
@@ -133,9 +133,9 @@ class Image extends DataObject {
 			array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
 		}
 
-		if ($category != 'all'){
+		if ($sort != 'all'){
 			App::getDBO()->prepare('SELECT * FROM images i INNER JOIN annotations a on i.id = a.imageID
-				WHERE i.id IN ('.implode(",",$idArray).') AND width = 1024 AND a.category = "'.$category.'"');
+				WHERE i.id IN ('.implode(",",$idArray).') AND width = 1024 AND a.category = "'.$sort.'"');
 		} else {
 			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
 		}

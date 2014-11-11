@@ -51,7 +51,7 @@ angular.module('controllers', [])
 		// Set default image params for querying
 		$scope.limit = 50;
 		$scope.offset = 0;
-		$scope.sortMethod = "recent";
+		$scope.sortMethod = "all";
 
 		// Create params structure with default params
 		$scope.imageParams = {
