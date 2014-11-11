@@ -1,0 +1,127 @@
+body {
+	margin: 0;
+}
+
+@passColor: #009f3e;
+@failColor: #bd002b;
+
+#testResults {
+	font-family: helvetica-neue, helvetica, sans-serif;
+	padding: 0 1em;
+
+	#testStatus, #testResults {
+		padding: .5em .5em 0 1em;
+		color: #555;
+	}
+
+	#testHarnessErrors {
+		padding: .2em 1em;
+		margin: .5em -1em;
+		background: #d41c40;
+		color: #fff;
+	}
+
+	h1 {
+		font-size: 1.7em;
+		color: #333;
+	}
+	h2 {
+		margin-top: 2em;
+		font-size: 1.3em;
+		color: #069;
+	}
+
+	.testSummaryBox {
+		background: #f2f2f2;
+		margin: -1em -1em 1em -1em;
+		padding: 1em;
+		border-bottom: 1px solid #e2e2e2;
+
+		h1 {
+			font-size: 1.3em;
+			margin-bottom: 0;
+
+		}
+	}
+
+	#testStatus {
+		.pass {
+			color: @passColor;
+			font-weight: bold;
+		}
+		.fail {
+			color: @failColor;
+			font-weight: bold;
+		}
+	}
+
+	table.results {
+		box-sizing: border-box;
+		width: 100%;
+		border-collapse: collapse;
+		border-left: 1px solid #555;
+		border-right: 1px solid #555;
+		margin-bottom: 1em;
+
+		tr {
+			&:nth-child(odd) {
+				background: rgba(0,0,0,0.05);
+			}
+		}
+
+		td {
+			padding: .2em .5em;
+			border-bottom: 1px solid #AAA;
+			vertical-align: top;
+			font-size: 0.95em;
+
+			&:not(:first-child) {
+				border-left: 1px solid rgba(0,0,0,0.05);
+			}
+		}
+		th {
+			padding: .2em 2em .2em .5em;
+			white-space: nowrap;
+			text-align: left;
+			background: #555;
+			color: #FFF;
+			font-weight: normal;
+			border-bottom: 1px solid #000;
+			border-left: 1px solid rgba(0,0,0,0.05);
+
+			&:last-child {
+				width: 50%;
+			}
+			&:nth-child(1) {
+				width: 10px;
+			}
+			&:nth-child(2) {
+				width: 3em;
+			}
+			&:nth-child(3) {
+				width: 3em;
+			}
+		}
+		ul,li {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.pass {
+			color: @passColor;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+		.fail {
+			color: @failColor;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		.error .type {
+			color: #777;
+		}
+
+	}
+}

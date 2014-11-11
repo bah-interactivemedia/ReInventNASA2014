@@ -1,0 +1,106 @@
+body {
+  margin: 0;
+}
+#testResults {
+  font-family: helvetica-neue, helvetica, sans-serif;
+  padding: 0 1em;
+}
+#testResults #testStatus,
+#testResults #testResults {
+  padding: .5em .5em 0 1em;
+  color: #555;
+}
+#testResults #testHarnessErrors {
+  padding: .2em 1em;
+  margin: 0.5em -1em;
+  background: #d41c40;
+  color: #fff;
+}
+#testResults h1 {
+  font-size: 1.7em;
+  color: #333;
+}
+#testResults h2 {
+  margin-top: 2em;
+  font-size: 1.3em;
+  color: #069;
+}
+#testResults .testSummaryBox {
+  background: #f2f2f2;
+  margin: -1em -1em 1em -1em;
+  padding: 1em;
+  border-bottom: 1px solid #e2e2e2;
+}
+#testResults .testSummaryBox h1 {
+  font-size: 1.3em;
+  margin-bottom: 0;
+}
+#testResults #testStatus .pass {
+  color: #009f3e;
+  font-weight: bold;
+}
+#testResults #testStatus .fail {
+  color: #bd002b;
+  font-weight: bold;
+}
+#testResults table.results {
+  box-sizing: border-box;
+  width: 100%;
+  border-collapse: collapse;
+  border-left: 1px solid #555;
+  border-right: 1px solid #555;
+  margin-bottom: 1em;
+}
+#testResults table.results tr:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.05);
+}
+#testResults table.results td {
+  padding: .2em .5em;
+  border-bottom: 1px solid #AAA;
+  vertical-align: top;
+  font-size: 0.95em;
+}
+#testResults table.results td:not(:first-child) {
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+#testResults table.results th {
+  padding: .2em 2em .2em .5em;
+  white-space: nowrap;
+  text-align: left;
+  background: #555;
+  color: #FFF;
+  font-weight: normal;
+  border-bottom: 1px solid #000;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+#testResults table.results th:last-child {
+  width: 50%;
+}
+#testResults table.results th:nth-child(1) {
+  width: 10px;
+}
+#testResults table.results th:nth-child(2) {
+  width: 3em;
+}
+#testResults table.results th:nth-child(3) {
+  width: 3em;
+}
+#testResults table.results ul,
+#testResults table.results li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#testResults table.results .pass {
+  color: #009f3e;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+#testResults table.results .fail {
+  color: #bd002b;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+#testResults table.results .error .type {
+  color: #777;
+}

@@ -1,0 +1,307 @@
+body {
+  padding-top: 40px;
+  font-size: 13px;
+}
+h1 {
+  font-size: 28px;
+}
+h2 {
+  font-size: 22px;
+}
+h3 {
+  font-size: 18px;
+}
+h4,
+h5 {
+  font-size: 14px;
+}
+.pageHeader {
+  min-width: 500px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #333;
+  color: #fff;
+  height: 38px;
+  z-index: 1;
+}
+.pageHeader > div {
+  line-height: 32px;
+  padding: 6px 8px;
+  z-index: 2;
+}
+.pageHeader span#pageTitle {
+  position: absolute;
+  display: block;
+  width: 34%;
+  margin-left: -17%;
+  top: 0;
+  left: 50%;
+  overflow: hidden;
+  line-height: 38px;
+  height: 38px;
+  text-align: center;
+  z-index: 3;
+}
+.pageHeader a {
+  float: right;
+  margin-right: 10px;
+}
+.pageHeader .btn-group {
+  margin-top: -3px;
+}
+.pageHeader label {
+  padding-top: 5px;
+  font-size: 0.85em;
+  float: left;
+}
+.noSelect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.logHeader {
+  width: 100%;
+  table-layout: fixed;
+}
+.logHeader td {
+  padding: 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.logHeader td:nth-child(1) {
+  width: 40px;
+  overflow: visible;
+}
+.logHeader td:nth-child(2) {
+  width: 25px;
+}
+.logHeader td:nth-child(3) {
+  width: 60px;
+}
+.logHeader td:nth-child(4) {
+  width: 110px;
+}
+.logHeader td:nth-child(6) {
+  width: 70px;
+}
+.logHeader td:nth-child(7) {
+  width: 60px;
+}
+.logHeader .badge {
+  margin-top: -3px;
+  padding: 0 6px;
+}
+#logList .accordion-heading {
+  border-top: 1px solid #eee;
+}
+#logList .accordion-heading:nth-child(1) {
+  border-top: none;
+}
+#logList .accordion-heading:nth-child(odd) {
+  background: rgba(40, 40, 0, 0.02);
+}
+#logList .accordion-heading .accordion-body {
+  background: #f5f5f4;
+}
+#logList .accordion-heading .accordion-body > div {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.75);
+}
+#logList .tabbable {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-left: none;
+  position: relative;
+  min-height: 160px;
+}
+#logList .tabbable ul {
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background: #f5f5f4;
+  margin-bottom: -1px;
+  margin-top: -1px;
+}
+#logList .tabbable ul a {
+  margin-bottom: 1px;
+}
+#logList .tabbable .tab-content {
+  margin-left: 115px;
+  padding: 10px 10px 10px 0px;
+  max-height: 500px;
+  overflow: auto;
+}
+a.adminBackButton {
+  float: left;
+  color: #fff;
+  margin-left: 2em;
+  line-height: 38px;
+  height: 38px;
+}
+a.adminBackButton:before {
+  content: "";
+  display: inline-block;
+  position: relative;
+  top: .2em;
+  left: -0.8em;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 7px 8px 7px 0;
+  border-color: transparent #ffffff transparent transparent;
+}
+a.adminBackButton:visited,
+a.adminBackButton:active,
+a.adminBackButton:hover {
+  color: #fff;
+}
+.adminPage {
+  width: 850px;
+  margin: auto;
+}
+.logo {
+  background: url(../images/mudpuppy.png) center center no-repeat;
+  height: 150px;
+  width: 100%;
+  min-width: 850px;
+  margin: 1em 0 4em 0;
+}
+a.adminButton:hover {
+  color: #fff;
+  text-decoration: none;
+  background: #b81160;
+}
+.adminButton {
+  display: block;
+  background: #902b51;
+  color: #fff;
+  border-radius: 2px;
+  width: 200px;
+  height: 150px;
+  text-align: center;
+  margin: 5px;
+  float: left;
+}
+.adminButton span.icon {
+  display: block;
+  width: 200px;
+  height: 110px;
+}
+.adminButton span.icon.log {
+  background: url(../images/debugIcon.png) center center no-repeat;
+}
+.adminButton span.icon.database {
+  background: url(../images/databaseIcon.png) center center no-repeat;
+}
+.adminButton span.icon.structure {
+  background: url(../images/appStructureIcon.png) center center no-repeat;
+}
+div.adminButton {
+  background: #eee;
+}
+div.adminButton.disabled {
+  background: #ccc;
+}
+.badge-danger {
+  background-color: #D9534F;
+}
+pre {
+  overflow: inherit;
+}
+.tabs-below .nav-tabs,
+.tabs-right .nav-tabs,
+.tabs-left .nav-tabs {
+  border-bottom: 0;
+}
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+  display: none;
+}
+.tab-content > .active,
+.pill-content > .active {
+  display: block;
+}
+.tabs-below > .nav-tabs {
+  border-top: 1px solid #ddd;
+}
+.tabs-below > .nav-tabs > li {
+  margin-top: -1px;
+  margin-bottom: 0;
+}
+.tabs-below > .nav-tabs > li > a {
+  -webkit-border-radius: 0 0 4px 4px;
+  -moz-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
+}
+.tabs-below > .nav-tabs > li > a:hover,
+.tabs-below > .nav-tabs > li > a:focus {
+  border-top-color: #ddd;
+  border-bottom-color: transparent;
+}
+.tabs-below > .nav-tabs > .active a,
+.tabs-below > .nav-tabs > .active a:hover,
+.tabs-below > .nav-tabs > .active a:focus {
+  border-color: transparent #ddd #ddd #ddd;
+}
+.tabs-left > .nav-tabs > li,
+.tabs-right > .nav-tabs > li {
+  float: none;
+}
+.tabs-left > .nav-tabs > li > a,
+.tabs-right > .nav-tabs > li > a {
+  min-width: 74px;
+  margin-right: 0;
+  margin-bottom: 3px;
+}
+.tabs-left > .nav-tabs {
+  float: left;
+  margin-right: 19px;
+  border-right: 1px solid #ddd;
+}
+.tabs-left > .nav-tabs > li > a {
+  margin-right: -1px;
+  -webkit-border-radius: 4px 0 0 4px;
+  -moz-border-radius: 4px 0 0 4px;
+  border-radius: 4px 0 0 4px;
+}
+.tabs-left > .nav-tabs > li > a:hover,
+.tabs-left > .nav-tabs > li > a:focus {
+  border-color: #eee #ddd #eee #eee;
+}
+.tabs-left > .nav-tabs > .active a,
+.tabs-left > .nav-tabs > .active a:hover,
+.tabs-left > .nav-tabs > .active a:focus {
+  border-color: #ddd transparent #ddd #ddd;
+  *border-right-color: #fff;
+}
+.tabs-right > .nav-tabs {
+  float: right;
+  margin-left: 19px;
+  border-left: 1px solid #ddd;
+}
+.tabs-right > .nav-tabs > li > a {
+  margin-left: -1px;
+  -webkit-border-radius: 0 4px 4px 0;
+  -moz-border-radius: 0 4px 4px 0;
+  border-radius: 0 4px 4px 0;
+}
+.tabs-right > .nav-tabs > li > a:hover,
+.tabs-right > .nav-tabs > li > a:focus {
+  border-color: #eee #eee #eee #ddd;
+}
+.tabs-right > .nav-tabs > .active a,
+.tabs-right > .nav-tabs > .active a:hover,
+.tabs-right > .nav-tabs > .active a:focus {
+  border-color: #ddd #ddd #ddd transparent;
+  *border-left-color: #fff;
+}
+.panel-heading {
+  cursor: pointer;
+}
+input[type=checkbox] {
+  margin-top: 2px;
+}
