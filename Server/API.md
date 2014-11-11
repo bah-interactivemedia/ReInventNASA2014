@@ -6,9 +6,20 @@
 
 ###GET Images
 
-/images/getImages?limit=[**limit**]
+/images/getImages?limit=[**limit**]&sort=[**all**]
 
 - limit: int
+- sort: string
+	- all (default)
+	- layered
+	- blueberries
+	- brightRocks
+
+###GET Images with same location
+
+/images/getSameLocationImages?image=[**image**]
+
+- image: int
 
 ---
 
