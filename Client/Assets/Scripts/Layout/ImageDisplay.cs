@@ -29,14 +29,23 @@ public class ImageDisplay : MonoBehaviour {
 		objectLocations = new Dictionary<GameObject, Vector2>();
 		Initialize ();
 
-		for (int i=0; i<20; i++) {
-			StartCoroutine (LoadOneImage());
-		}
+		imageLoader.LoadRandomImages ((string imageUrl) => {
+			StartCoroutine(LoadOneImage (imageUrl));
+		}, RowCount * ColCount);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void ClearDisplay() {
+		foreach (GameObject go in objectLocations.Keys) {
+			// TODO animate out or something cool
+			go.transform.parent = null;
+		}
+		locationMap = new GameObject[RowCount, ColCount];
+		objectLocations = new Dictionary<GameObject, Vector2>();
 	}
 
 	void Initialize() {
@@ -45,14 +54,18 @@ public class ImageDisplay : MonoBehaviour {
 		gridSizeY = gridSizeX;
 	}
 
-	IEnumerator LoadOneImage() {
-		GameObject go = imageLoader.CreateGameObject ();
-		string image = imageLoader.GetRandomImage ();
-		WWW www = imageLoader.GetWWWForImage (image);
-		yield return www;
-		imageLoader.SetTexture(go, www);
-		Vector2 location = EmptyLocation ();
-		PlaceImage ((int)location.y, (int)location.x, go);
+	IEnumerator LoadOneImage(string url) {
+		if (AnyEmptyLocations ()) {
+			GameObject go = imageLoader.CreateGameObject ();
+			WWW www = new WWW (url);
+			yield return www;
+
+			imageLoader.SetTexture(go, www);
+			if (AnyEmptyLocations ()) {
+				Vector2 location = EmptyLocation ();
+				PlaceImage ((int)location.y, (int)location.x, go);
+			}
+		}
 	}
 
 	void PlaceImage(int row, int col, GameObject go) {
