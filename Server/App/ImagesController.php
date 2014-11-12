@@ -124,4 +124,8 @@ class ImagesController extends Controller {
 	public function action_viewImage($image){
 		return $image->viewImage();
 	}
+
+	public function action_getAnnotatedImages(){
+		return Image::getAnnotatedImages();
+	}
 }

@@ -191,6 +191,26 @@ class Image extends DataObject {
 
 		return $this;
 	}
+
+	static function getAnnotatedImages(){
+		$s3Client = S3Client::factory(array(
+			'key' => $_SERVER['AWS_ACCESS_KEY_ID'],
+			'secret' => $_SERVER['AWS_SECRET_KEY'],
+			'region' => 'us-west-1'
+		));
+
+		$objects = $s3Client->getIterator('ListObjects', array(
+			'Bucket' => 'bah-reinvent-processed-images'
+		));
+
+		$processedImages = [];
+
+		foreach ($objects as $object) {
+			array_push($processedImages, 'https://s3-us-west-1.amazonaws.com/bah-reinvent-processed-images/'.$object['Key']);
+		}
+
+		return $processedImages;
+	}
 }
 
 ?>
