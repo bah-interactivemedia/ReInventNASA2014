@@ -58,12 +58,9 @@ public class GameController : MonoBehaviour {
 			var mark = selectedImage.FindChild("Mark");
 			mark.gameObject.SetActive(true);
 			DeselectImage();
+			ImageMetadata md = selectedImage.GetComponent<ImageMetadata> ();
+			md.SubmitTag (imgTag);
 		}
-		var mark = selectedImage.FindChild("Mark");
-		mark.gameObject.SetActive(true);
-		DeselectImage();
-		ImageMetadata md = selectedImage.GetComponent<ImageMetadata> ();
-		md.SubmitTag (imgTag);
 	}
 
 	public void CancelTag(){
