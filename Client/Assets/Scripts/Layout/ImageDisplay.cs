@@ -20,7 +20,7 @@ public class ImageDisplay : MonoBehaviour {
 
 	public ImageLoader imageLoader;
 
-	public Transform playerOrigin;
+	public bool isLoadingImages = false;
 
 	// Use this for initialization
 	void Start () {
@@ -31,9 +31,25 @@ public class ImageDisplay : MonoBehaviour {
 		objectLocations = new Dictionary<GameObject, Vector2>();
 		Initialize ();
 
-		imageLoader.LoadRandomImages ((string imageUrl, Dictionary<string, object> metadata) => {
-			StartCoroutine(LoadOneImage (imageUrl, metadata));
+		LoadImages();
+	}
+
+	public void LoadImages ()
+	{
+		isLoadingImages = true;
+
+		Invoke("ImageTimerComplete", 10.0f);
+
+		imageLoader.LoadRandomImages ((string imageUrl, Dictionary<string, object> metadata) =>  {
+			StartCoroutine (LoadOneImage (imageUrl, metadata));
 		}, RowCount * ColCount);
+	}
+
+	/// <summary>
+	/// Worst . technique . ever .
+	/// </summary>
+	void ImageTimerComplete(){
+		isLoadingImages = false;
 	}
 	
 	// Update is called once per frame
