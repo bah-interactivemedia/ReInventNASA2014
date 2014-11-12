@@ -132,13 +132,13 @@ class Image extends DataObject {
 
 	/**************** Image Fetching ***************/
 
-	/**
-	 * Gets $limit number of images
+	/** Gets $limit number of images
 	 * @param int $limit
+	 * @param int $offset
 	 * @param string $sort
-	 * @return array $images
+	 * @return array
 	 */
-	static function getImages($limit, $sort = 'all'){
+	static function getImages($limit, $offset, $sort){
 		$idArray = [];
 
 		App::getDBO()->prepare('SELECT MIN(id) as minID, MAX(id) as maxID FROM images');
@@ -147,16 +147,20 @@ class Image extends DataObject {
 		$bounds = $limit*4;
 
 		for($i = 0; $i < $bounds; $i++){
-			if (count($idArray) < $limit){
-				array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
-			}
+			array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
 		}
 
 		if ($sort == 'all'){
-			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
+			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024 AND height = 1024 LIMIT '.$limit);
 		} else {
-			App::getDBO()->prepare('SELECT * FROM images i INNER JOIN annotations a on i.id = a.imageID
-				WHERE i.id IN ('.implode(",",$idArray).') AND width = 1024 AND a.category = "'.$sort.'"');
+			$offsetClause = "";
+
+			if ($offset != null){
+				$offsetClause = "OFFSET ".$offset;
+			}
+
+			App::getDBO()->prepare('SELECT * FROM images i INNER JOIN annotations a on i.id = a.imageId
+				WHERE width = 1024 AND a.category = "'.$sort.'" LIMIT '.$limit.' '.$offsetClause);
 		}
 
 		$images = App::getDBO()->execute()->fetchAll(\PDO::FETCH_CLASS);
@@ -186,6 +190,26 @@ class Image extends DataObject {
 		$this->save();
 
 		return $this;
+	}
+
+	static function getAnnotatedImages(){
+		$s3Client = S3Client::factory(array(
+			'key' => $_SERVER['AWS_ACCESS_KEY_ID'],
+			'secret' => $_SERVER['AWS_SECRET_KEY'],
+			'region' => 'us-west-1'
+		));
+
+		$objects = $s3Client->getIterator('ListObjects', array(
+			'Bucket' => 'bah-reinvent-processed-images'
+		));
+
+		$processedImages = [];
+
+		foreach ($objects as $object) {
+			array_push($processedImages, 'https://s3-us-west-1.amazonaws.com/bah-reinvent-processed-images/'.$object['Key']);
+		}
+
+		return $processedImages;
 	}
 }
 

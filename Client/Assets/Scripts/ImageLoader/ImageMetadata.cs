@@ -18,6 +18,14 @@ public class ImageMetadata : MonoBehaviour {
 	public string Id() {
 		return (string)metadata ["id"];
 	}
+	
+	public int Height() {
+		return int.Parse ((string)metadata ["height"]);
+	}
+	
+	public int Width() {
+		return int.Parse ((string)metadata ["width"]);
+	}
 
 	public void SubmitTag(int tag) {
 		StartCoroutine (_SubmitTag (tag));
@@ -36,6 +44,68 @@ public class ImageMetadata : MonoBehaviour {
 		string url = ImageLoader.ENDPOINT + "annotations/annotateImage?image=" + Id () + "&annotationBlob=&category=" + category;
 		print (url);
 		WWW req = new WWW (url);
+
 		yield return req;
 	}
+
+	public void SubmitLine(Vector3 tlw, Vector3 brw) {
+		Vector2 tl = TopLeftHit(tlw, brw);
+		Vector2 br = BottomRightHit(tlw,brw);
+		if (tl.x != -1 && br.x != -1) {
+			StartCoroutine(_SubmitAnnotation(tl, br, "line", "layered"));
+		}
+	}
+
+	public void SubmitRect(Vector3 tlw, Vector3 brw) {
+		Vector2 tl = TopLeftHit(tlw, brw);
+		Vector2 br = BottomRightHit(tlw,brw);
+		if (tl.x != -1 && br.x != -1) {
+			StartCoroutine(_SubmitAnnotation(tl, br, "rect", "brightRocks"));
+		}
+	}
+	
+	IEnumerator _SubmitAnnotation(Vector2 tl, Vector2 br, string type, string category) {
+		string annotation = "[[\""+type+"\", "+tl.x+","+tl.y+","+br.x+","+br.y+"]]";
+		string url = ImageLoader.ENDPOINT + "annotations/annotateImage?image=" + Id () + "&annotationBlob=" + annotation + "&category=" + category;
+		print (url);
+		WWW req = new WWW (url);
+		
+		yield return req;
+	}
+
+
+	public Vector2 TopLeftHit(Vector3 tlw, Vector3 brw) {
+		Vector3 delta = (brw - tlw) / 30;
+		for (int i=0; i<29; i++) {
+			RaycastHit hit;
+			Vector3 screenPos = camera.WorldToScreenPoint (tlw);
+			Ray ray = camera.ScreenPointToRay(screenPos);
+			if (Physics.Raycast (ray, out hit) && hit.transform == transform) {
+				return new Vector2(hit.textureCoord.x * Width(), hit.textureCoord.y * Height());
+			}
+			tlw += delta;
+		}
+
+		print ("raycast failed!");
+		return new Vector2(-1,-1);
+	}
+
+	
+	public Vector2 BottomRightHit(Vector3 tlw, Vector3 brw) {
+		Vector3 delta = (tlw - brw) / 30;
+		for (int i=0; i<29; i++) {
+			RaycastHit hit;
+			Vector3 screenPos = camera.WorldToScreenPoint (brw);
+			Ray ray = camera.ScreenPointToRay(screenPos);
+			if (Physics.Raycast (ray, out hit) && hit.transform == transform) {
+				return new Vector2(hit.textureCoord.x * Width(), hit.textureCoord.y * Height());
+			}
+			brw += delta;
+		}
+		
+		print ("raycast failed!");
+		return new Vector2(-1,-1);
+	}
+
+
 }

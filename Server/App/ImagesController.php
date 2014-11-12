@@ -101,11 +101,12 @@ class ImagesController extends Controller {
 
 	/**
 	 * @param int $limit
+	 * @param int $offset
 	 * @param string $sort
 	 * @return array
 	 */
-	public function action_getImages($limit, $sort){
-		return Image::getImages($limit, $sort);
+	public function action_getImages($limit = 50, $offset = 0, $sort = 'all'){
+		return Image::getImages($limit, $offset, $sort);
 	}
 
 	/**
@@ -122,5 +123,9 @@ class ImagesController extends Controller {
 	 */
 	public function action_viewImage($image){
 		return $image->viewImage();
+	}
+
+	public function action_getAnnotatedImages(){
+		return Image::getAnnotatedImages();
 	}
 }

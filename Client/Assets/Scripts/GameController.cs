@@ -119,6 +119,9 @@ public class GameController : MonoBehaviour {
 		// DO Line Commit stuff here
 		var mark = selectedImage.FindChild("Mark");
 		mark.gameObject.SetActive(true);
+		LineAttribute la = line.GetComponent<LineAttribute> ();
+		ImageMetadata md = selectedImage.GetComponent<ImageMetadata> ();
+		md.SubmitLine (la.TopLeft (), la.BottomRight ());
 		DeselectImage();
 	}
 

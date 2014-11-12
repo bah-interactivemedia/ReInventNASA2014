@@ -99,6 +99,7 @@ class Annotation extends DataObject {
 		$url = $imageRecord['url'];
 		$imageId = $imageRecord['imageID']."_".$annotation->id;
 
+
 		// Setup SQS Client
 		$sqsClient = SQSClient::factory(array(
 			'key' => $_SERVER['AWS_ACCESS_KEY_ID'],
@@ -126,6 +127,9 @@ class Annotation extends DataObject {
 
 		// Create color
 		$yellow = imagecolorallocate($image, 255, 243, 96);
+
+		// Set line thickness
+		imagesetthickness($image, 5);
 
 		// Loop through annotations
 		foreach($annotationBlob as $annotation){
