@@ -132,13 +132,13 @@ class Image extends DataObject {
 
 	/**************** Image Fetching ***************/
 
-	/**
-	 * Gets $limit number of images
+	/** Gets $limit number of images
 	 * @param int $limit
+	 * @param int $offset
 	 * @param string $sort
-	 * @return array $images
+	 * @return array
 	 */
-	static function getImages($limit, $sort = 'all'){
+	static function getImages($limit, $offset, $sort){
 		$idArray = [];
 
 		App::getDBO()->prepare('SELECT MIN(id) as minID, MAX(id) as maxID FROM images');
@@ -155,8 +155,15 @@ class Image extends DataObject {
 		if ($sort == 'all'){
 			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
 		} else {
-			App::getDBO()->prepare('SELECT * FROM images i INNER JOIN annotations a on i.id = a.imageID
-				WHERE i.id IN ('.implode(",",$idArray).') AND width = 1024 AND a.category = "'.$sort.'"');
+			$orderByClause = "";
+			$offsetClause = "";
+
+			if ($offset != null){
+				$offsetClause = "OFFSET ".$offset;
+			}
+
+			App::getDBO()->prepare('SELECT * FROM images i INNER JOIN annotations a on i.id = a.imageId
+				WHERE width = 1024 AND a.category = "'.$sort.'" LIMIT '.$limit.' '.$offsetClause);
 		}
 
 		$images = App::getDBO()->execute()->fetchAll(\PDO::FETCH_CLASS);
