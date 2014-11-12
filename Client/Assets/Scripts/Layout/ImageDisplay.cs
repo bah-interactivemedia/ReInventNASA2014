@@ -7,10 +7,10 @@ public class ImageDisplay : MonoBehaviour {
 	private float MinDepth = 13;
 	private float MaxDepth = 13;
 	private int RowCount = 4;
-	private int ColCount = 12;
+	private int ColCount = 8;
 
-	private float width = 120;
-	private float height = 20;
+	private float width = 160;
+	private float height = 18;
 
 	private float gridSizeX;
 	private float gridSizeY;
@@ -44,7 +44,7 @@ public class ImageDisplay : MonoBehaviour {
 	public void ClearDisplay() {
 		foreach (GameObject go in objectLocations.Keys) {
 			// TODO animate out or something cool
-			go.transform.parent = null;
+			GameObject.Destroy(go);
 		}
 		locationMap = new GameObject[RowCount, ColCount];
 		objectLocations = new Dictionary<GameObject, Vector2>();
@@ -66,6 +66,8 @@ public class ImageDisplay : MonoBehaviour {
 			if (AnyEmptyLocations ()) {
 				Vector2 location = EmptyLocation ();
 				PlaceImage ((int)location.y, (int)location.x, go);
+			} else {
+				GameObject.Destroy(go);
 			}
 		}
 	}
@@ -75,7 +77,7 @@ public class ImageDisplay : MonoBehaviour {
 		locationMap [row, col] = go;
 		objectLocations [go] = new Vector2 (col, row);
 
-		float x = Mathf.Deg2Rad * ((ColCount-1f) / 2.0f - col) / ColCount * 2 * width + Mathf.PI/2;
+		float x = Mathf.Deg2Rad * ((ColCount-1f) / 2.0f - col) / ColCount * width + Mathf.PI/2;
 		float y = ((RowCount-1f) / 2.0f - row) / RowCount * height;
 		float depth = MinDepth + Random.value * (MaxDepth - MinDepth);
 
@@ -102,14 +104,14 @@ public class ImageDisplay : MonoBehaviour {
 		}
 
 		for (int r=0; r<RowCount; r++) {
-			for (int c=0; c<RowCount; c++) {
+			for (int c=0; c<ColCount; c++) {
 				if (locationMap[r, c] == null) {
 					return new Vector2(c, r);
 				}
 			}
 		}
 		print ("oops");
-		return new Vector2(0,0);
+		return new Vector2(-1,-1);
 	}
 
 	bool AnyEmptyLocations() {
