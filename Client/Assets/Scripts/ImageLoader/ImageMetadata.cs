@@ -65,12 +65,17 @@ public class ImageMetadata : MonoBehaviour {
 	}
 	
 	IEnumerator _SubmitAnnotation(Vector2 tl, Vector2 br, string type, string category) {
-		string annotation = "[[\""+type+"\", "+tl.x+","+tl.y+","+br.x+","+br.y+"]]";
-		string url = ImageLoader.ENDPOINT + "annotations/annotateImage?image=" + Id () + "&annotationBlob=" + annotation + "&category=" + category;
+		string annotation = "&annotationBlob[]="+type;
+		annotation += "&annotationBlob[]="+tl.x;
+		annotation += "&annotationBlob[]="+tl.y;
+		annotation += "&annotationBlob[]="+br.x;
+		annotation += "&annotationBlob[]="+br.y;
+		string url = ImageLoader.ENDPOINT + "annotations/annotateImage?image=" + Id () + annotation + "&category=" + category;
 		print (url);
 		WWW req = new WWW (url);
 		
 		yield return req;
+		print (req.text);
 	}
 
 
@@ -78,8 +83,7 @@ public class ImageMetadata : MonoBehaviour {
 		Vector3 delta = (brw - tlw) / 30;
 		for (int i=0; i<29; i++) {
 			RaycastHit hit;
-			Vector3 screenPos = camera.WorldToScreenPoint (tlw);
-			Ray ray = camera.ScreenPointToRay(screenPos);
+			Ray ray = new Ray(tlw, Vector3.forward * 10);
 			if (Physics.Raycast (ray, out hit) && hit.transform == transform) {
 				return new Vector2(hit.textureCoord.x * Width(), hit.textureCoord.y * Height());
 			}
@@ -95,8 +99,7 @@ public class ImageMetadata : MonoBehaviour {
 		Vector3 delta = (tlw - brw) / 30;
 		for (int i=0; i<29; i++) {
 			RaycastHit hit;
-			Vector3 screenPos = camera.WorldToScreenPoint (brw);
-			Ray ray = camera.ScreenPointToRay(screenPos);
+			Ray ray = new Ray(brw, Vector3.forward * 10);
 			if (Physics.Raycast (ray, out hit) && hit.transform == transform) {
 				return new Vector2(hit.textureCoord.x * Width(), hit.textureCoord.y * Height());
 			}

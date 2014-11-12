@@ -51,6 +51,8 @@ public class MenuInput : MonoBehaviour {
 		if (inputDevice.Action1.WasReleased && selectedButton != null) {
 			Debug.Log("Invoking");
 			selectedButton.onClick.Invoke();
+			UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+			selectedButton = null;
 		}
 	}
 }
