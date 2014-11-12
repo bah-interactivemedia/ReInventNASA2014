@@ -128,6 +128,9 @@ class Annotation extends DataObject {
 		// Create color
 		$yellow = imagecolorallocate($image, 255, 243, 96);
 
+		// Set line thickness
+		imagesetthickness($image, 5);
+
 		// Loop through annotations
 		foreach($annotationBlob as $annotation){
 			// Check for rectangle or line annotation

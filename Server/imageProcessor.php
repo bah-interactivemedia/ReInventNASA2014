@@ -21,19 +21,22 @@ $sqsClient = SQSClient::factory(array(
 $messageJSON = file_get_contents("php://input");
 $message = json_decode($messageJSON,true);
 
-$imageID = $message["imageID"];
-$imageURL = $message["image"];
-$annotations = $message["annotations"];
+$imageId = $message["imageID"];
+$url = $message["image"];
+$annotationBlob = $message["annotations"];
 
 try {
 	// Create image
-	$image = imagecreatefromjpeg($imageURL);
+	$image = imagecreatefromjpeg($url);
 
 	// Create color
 	$yellow = imagecolorallocate($image, 255, 243, 96);
 
+	// Set line thickness
+	imagesetthickness($image, 5);
+
 	// Loop through annotations
-	foreach($annotations as $annotation){
+	foreach($annotationBlob as $annotation){
 		// Check for rectangle or line annotation
 		if ($annotation[0] == 'rect'){
 			// Draw rectangle for rectangle annotations
@@ -44,12 +47,12 @@ try {
 		}
 	}
 
-	imagejpeg($image,"/tmp/processedImage_".$imageID.".jpg",90);
+	imagejpeg($image,"/tmp/processedImage_".$imageId.".jpg",90);
 
 	$upload = $s3Client->putObject(array(
 		'Bucket' => 'bah-reinvent-processed-images',
-		'Key'    => $imageID.".jpg",
-		'Body'   => file_get_contents("/tmp/processedImage_".$imageID.".jpg"),
+		'Key'    => $imageId.".jpg",
+		'Body'   => file_get_contents("/tmp/processedImage_".$imageId.".jpg"),
 		'ACL'	 => CannedAcl::PUBLIC_READ,
 		'ContentType' => 'image/jpeg'
 	));
