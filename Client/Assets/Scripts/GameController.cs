@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 	public enum GameState{
 		imageView,
+		imageInspect,
 		imageSelected,
 		addLineAttribute
 	}
@@ -13,6 +14,7 @@ public class GameController : MonoBehaviour {
 	public GameObject radialMenu;
 
 	public Transform linePrefab;
+	public Transform rectPrefab;
 
 	[HideInInspector]
 	public Transform selectedImage;
@@ -20,6 +22,7 @@ public class GameController : MonoBehaviour {
 	private Vector3 selectedImageRot;
 
 	private Transform line;
+	private Transform rectangle;
 
 	[HideInInspector]
 	public GameState state { 
@@ -30,6 +33,9 @@ public class GameController : MonoBehaviour {
 
 			if (_state == GameState.imageView){
 				radialMenu.SetActive(false);
+			} else if (state == GameState.imageSelected){
+				radialMenu.SetActive(true);
+				selectedImage.GetComponent<ImageView>().HideMessage();
 			}
 			// Do any state specific stuff here
 		}
@@ -55,6 +61,11 @@ public class GameController : MonoBehaviour {
 			var canvas = selectedImage.FindChild("Canvas");
 			canvas.gameObject.SetActive(true);
 			startLineEdit();
+		} else if (imgTag == 3){
+			state = GameState.addLineAttribute;
+			var canvas = selectedImage.FindChild("Canvas");
+			canvas.gameObject.SetActive(true);
+			startRectEdit();
 		} else {
 			var mark = selectedImage.FindChild("Mark");
 			mark.gameObject.SetActive(true);
@@ -71,7 +82,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void SelectImage(Transform image){
-		state = GameState.imageSelected;
+		state = GameState.imageInspect;
 
 		selectedImage = image;
 		selectedImageOrig = image.position;
@@ -81,7 +92,7 @@ public class GameController : MonoBehaviour {
 		      .position(targetImagePosition.position)
 		      .rotation(-Vector3.forward)
 		      .onComplete(thisTransform => {
-			radialMenu.SetActive(true);
+			selectedImage.GetComponent<ImageView>().ShowMessage("Press X to tag image\nPress O to go back");
 		}));
 	}
 
@@ -90,6 +101,18 @@ public class GameController : MonoBehaviour {
 		line.GetComponent<LineAttribute>().controller = this;
 		line.parent = selectedImage;
 		line.transform.localPosition = new Vector3(0,0,-.1f);
+
+		selectedImage.GetComponent<ImageView>().ShowMessage("Left Stick Moves, Triggers rotates, Right Stick up/down scales Press X to place line. Press O to cancel.");
+	}
+
+	public void startRectEdit(){
+		rectangle = (Transform) Instantiate(rectPrefab);
+		rectangle.GetComponent<Rectangle>().controller = this;
+		rectangle.parent = selectedImage;
+		rectangle.transform.localPosition = new Vector3(0,0,-.1f);
+		rectangle.GetComponent<Rectangle>().origin = new Vector3(0,0,-.1f); 
+		
+		selectedImage.GetComponent<ImageView>().ShowMessage("Left stick moves, Right stick scales.");
 	}
 
 	public void endLineEdit(){
@@ -97,13 +120,23 @@ public class GameController : MonoBehaviour {
 		var mark = selectedImage.FindChild("Mark");
 		mark.gameObject.SetActive(true);
 		DeselectImage();
-		line = null;
+	}
+
+	public void endRectEdit(){
+		// DO Line Commit stuff here
+		var mark = selectedImage.FindChild("Mark");
+		mark.gameObject.SetActive(true);
+		DeselectImage();
 	}
 
 	public void cancelLineEdit(){
 		DeselectImage();
 		state = GameState.imageView;
-		line = null;
+	}
+
+	public void cancelRectEdit(){
+		DeselectImage();
+		state = GameState.imageView;
 	}
 
 	public void DeselectImage(){
@@ -111,13 +144,13 @@ public class GameController : MonoBehaviour {
 			Destroy(line.gameObject);
 		}
 
+		if (rectangle != null){
+			Destroy(rectangle.gameObject);
+		}
+
 		radialMenu.SetActive(false);
 		if (selectedImage != null){
-			var canvas = selectedImage.FindChild("Canvas");
-
-			if (canvas != null){
-				canvas.gameObject.SetActive(false);
-			}
+			selectedImage.GetComponent<ImageView>().HideMessage();
 
 			Go.to(selectedImage, .66f, new GoTweenConfig()
 			      .position(selectedImageOrig)

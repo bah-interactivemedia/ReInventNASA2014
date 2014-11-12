@@ -34,6 +34,16 @@ public class InputController : MonoBehaviour {
 				imageDisplay.ClearDisplay();
 				imageDisplay.LoadImages();
 			}
+		} else if (controller.state == GameController.GameState.imageInspect) {
+			if (inputDevice.Action2.WasReleased){
+				controller.CancelTag();
+			} else if (inputDevice.Action1.WasReleased){
+				controller.state = GameController.GameState.imageSelected;
+			}
+		} else if (controller.state == GameController.GameState.imageSelected) {
+			if (inputDevice.Action2.WasReleased){
+				controller.CancelTag();
+			}
 		}
 	}
 }
