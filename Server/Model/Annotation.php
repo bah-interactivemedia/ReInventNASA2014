@@ -116,8 +116,8 @@ class Annotation extends DataObject {
 		));
 
 		/*$s3Client = S3Client::factory(array(
-			'key' => 'AKIAJEPFUBJF5RGBL5AQ',
-			'secret' => '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',
+			'key' => $_SERVER['AWS_ACCESS_KEY_ID'],
+			'secret' => $_SERVER['AWS_SECRET_KEY'],
 			'region' => 'us-west-1'
 		));
 
