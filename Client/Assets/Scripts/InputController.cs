@@ -17,7 +17,7 @@ public class InputController : MonoBehaviour {
 		var inputDevice = InputManager.ActiveDevice;
 
 		if (controller.state == GameController.GameState.imageView){
-			if (inputDevice.RightTrigger.WasPressed){
+			if (inputDevice.Action1.WasReleased){
 				Debug.Log("Trigger Pressed!");
 
 				Ray ray = leftEye.camera.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
