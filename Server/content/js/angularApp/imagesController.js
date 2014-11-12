@@ -15,8 +15,6 @@ angular.module('controllers', [])
 							image: function(){
 								var modalImage = image[0];
 
-								console.log(modalImage);
-
 								// Set post date
 								var t = (modalImage.created_on).split(/[- :]/);
 								var approveDate = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]).getTime();

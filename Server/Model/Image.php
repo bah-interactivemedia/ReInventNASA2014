@@ -32,6 +32,7 @@ defined('MUDPUPPY') or die('Restricted');
  * @property int height
  * @property string mission
  * @property int created_on
+ * @property int views
  * 
  * Foreign Key Lookup Properties
  * #END MAGIC PROPERTIES
@@ -54,6 +55,7 @@ class Image extends DataObject {
 		$this->createColumn('height', DATATYPE_INT, NULL, false, 0);
 		$this->createColumn('mission', DATATYPE_STRING, NULL, false, 10);
 		$this->createColumn('created_on', DATATYPE_DATETIME, NULL, false, 0);
+		$this->createColumn('views', DATATYPE_INT, 0, false, 0);
 
 		// Foreign Key Lookups
 		// #END DEFAULTS
@@ -121,6 +123,7 @@ class Image extends DataObject {
 		$image->height = $height;
 		$image->mission = $mission;
 		$image->created_on = $created_on;
+		$image->views = 0;
 
 		$image->save();
 
@@ -145,11 +148,11 @@ class Image extends DataObject {
 			array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
 		}
 
-		if ($sort != 'all'){
+		if ($sort == 'all'){
+			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
+		} else {
 			App::getDBO()->prepare('SELECT * FROM images i INNER JOIN annotations a on i.id = a.imageID
 				WHERE i.id IN ('.implode(",",$idArray).') AND width = 1024 AND a.category = "'.$sort.'"');
-		} else {
-			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
 		}
 
 		$images = App::getDBO()->execute()->fetchAll(\PDO::FETCH_CLASS);
@@ -172,6 +175,13 @@ class Image extends DataObject {
 		$images = App::getDBO()->execute()->fetchAll(\PDO::FETCH_CLASS);
 
 		return $images;
+	}
+
+	public function viewImage(){
+		$this->views++;
+		$this->save();
+
+		return $this;
 	}
 }
 
