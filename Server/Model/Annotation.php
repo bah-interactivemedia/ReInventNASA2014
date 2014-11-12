@@ -99,7 +99,7 @@ class Annotation extends DataObject {
 		$url = $imageRecord['url'];
 		$imageId = $imageRecord['imageID']."_".$annotation->id;
 
-		
+
 		// Setup SQS Client
 		$sqsClient = SQSClient::factory(array(
 			'key' => $_SERVER['AWS_ACCESS_KEY_ID'],

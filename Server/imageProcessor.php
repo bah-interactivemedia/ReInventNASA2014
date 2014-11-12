@@ -1,5 +1,7 @@
 <?php
 
+require 'aws.phar';
+
 use Aws\S3\S3Client;
 use Aws\S3\Exception;
 use Aws\S3\Enum\CannedAcl;
