@@ -52,18 +52,27 @@ public class ImageMetadata : MonoBehaviour {
 		Vector2 tl = TopLeftHit(tlw, brw);
 		Vector2 br = BottomRightHit(tlw,brw);
 		if (tl.x != -1 && br.x != -1) {
-			StartCoroutine(_SubmitLine(tl, br));
+			StartCoroutine(_SubmitAnnotation(tl, br, "line", "layered"));
 		}
 	}
 
-	IEnumerator _SubmitLine(Vector2 tl, Vector2 br) {
-		string annotation = "[[\"line\", "+tl.x+","+tl.y+","+br.x+","+br.y+"]]";
-		string url = ImageLoader.ENDPOINT + "annotations/annotateImage?image=" + Id () + "&annotationBlob=" + annotation + "&category=layered";
+	public void SubmitRect(Vector3 tlw, Vector3 brw) {
+		Vector2 tl = TopLeftHit(tlw, brw);
+		Vector2 br = BottomRightHit(tlw,brw);
+		if (tl.x != -1 && br.x != -1) {
+			StartCoroutine(_SubmitAnnotation(tl, br, "rect", "brightRocks"));
+		}
+	}
+	
+	IEnumerator _SubmitAnnotation(Vector2 tl, Vector2 br, string type, string category) {
+		string annotation = "[[\""+type+"\", "+tl.x+","+tl.y+","+br.x+","+br.y+"]]";
+		string url = ImageLoader.ENDPOINT + "annotations/annotateImage?image=" + Id () + "&annotationBlob=" + annotation + "&category=" + category;
 		print (url);
 		WWW req = new WWW (url);
 		
 		yield return req;
 	}
+
 
 	public Vector2 TopLeftHit(Vector3 tlw, Vector3 brw) {
 		Vector3 delta = (brw - tlw) / 30;
