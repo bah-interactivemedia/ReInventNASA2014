@@ -25,10 +25,14 @@ defined('MUDPUPPY') or die('Restricted');
  * @property string vector_x
  * @property string vector_y
  * @property string vector_z
+ * @property string location_x
+ * @property string location_y
+ * @property string location_z
  * @property int width
  * @property int height
  * @property string mission
  * @property int created_on
+ * @property int views
  * 
  * Foreign Key Lookup Properties
  * #END MAGIC PROPERTIES
@@ -44,10 +48,14 @@ class Image extends DataObject {
 		$this->createColumn('vector_x', DATATYPE_DECIMAL, NULL, false, 0);
 		$this->createColumn('vector_y', DATATYPE_DECIMAL, NULL, false, 0);
 		$this->createColumn('vector_z', DATATYPE_DECIMAL, NULL, false, 0);
+		$this->createColumn('location_x', DATATYPE_DECIMAL, NULL, false, 0);
+		$this->createColumn('location_y', DATATYPE_DECIMAL, NULL, false, 0);
+		$this->createColumn('location_z', DATATYPE_DECIMAL, NULL, false, 0);
 		$this->createColumn('width', DATATYPE_INT, NULL, false, 0);
 		$this->createColumn('height', DATATYPE_INT, NULL, false, 0);
 		$this->createColumn('mission', DATATYPE_STRING, NULL, false, 10);
 		$this->createColumn('created_on', DATATYPE_DATETIME, NULL, false, 0);
+		$this->createColumn('views', DATATYPE_INT, 0, false, 0);
 
 		// Foreign Key Lookups
 		// #END DEFAULTS
@@ -91,13 +99,16 @@ class Image extends DataObject {
 	 * @param $vector_x
 	 * @param $vector_y
 	 * @param $vector_z
+	 * @param $location_x
+	 * @param $location_y
+	 * @param $location_z
 	 * @param $width
 	 * @param $height
 	 * @param $mission
 	 * @param $created_on
 	 * @return array
 	 */
-	static function createImage($id, $url, $vector_x, $vector_y, $vector_z, $width, $height, $mission, $created_on){
+	static function createImage($id, $url, $vector_x, $vector_y, $vector_z, $location_x, $location_y, $location_z, $width, $height, $mission, $created_on){
 		// Insert image record into database
 		$image = new self();
 		$image->url		= $url;
@@ -105,10 +116,14 @@ class Image extends DataObject {
 		$image->vector_x = $vector_x;
 		$image->vector_y = $vector_y;
 		$image->vector_z = $vector_z;
+		$image->location_x = $location_x;
+		$image->location_y = $location_y;
+		$image->location_z = $location_z;
 		$image->width = $width;
 		$image->height = $height;
 		$image->mission = $mission;
 		$image->created_on = $created_on;
+		$image->views = 0;
 
 		$image->save();
 
@@ -133,16 +148,40 @@ class Image extends DataObject {
 			array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
 		}
 
-		if ($sort != 'all'){
+		if ($sort == 'all'){
+			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
+		} else {
 			App::getDBO()->prepare('SELECT * FROM images i INNER JOIN annotations a on i.id = a.imageID
 				WHERE i.id IN ('.implode(",",$idArray).') AND width = 1024 AND a.category = "'.$sort.'"');
-		} else {
-			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
 		}
 
 		$images = App::getDBO()->execute()->fetchAll(\PDO::FETCH_CLASS);
 
 		return $images;
+	}
+
+	/**
+	 * @param int $image
+	 * @return array $images
+	 */
+	static function getSameLocationImages($image){
+		App::getDBO()->prepare('SELECT location_x as x, location_y as y, location_z as z FROM images WHERE id = '.$image);
+		$locationData = App::getDBO()->execute()->fetch(\PDO::FETCH_ASSOC);
+
+		App::getDBO()->prepare('SELECT * FROM images WHERE location_x = '.$locationData['x'].
+			' AND location_y = '.$locationData['y'].
+			' AND location_z = '.$locationData['z']);
+
+		$images = App::getDBO()->execute()->fetchAll(\PDO::FETCH_CLASS);
+
+		return $images;
+	}
+
+	public function viewImage(){
+		$this->views++;
+		$this->save();
+
+		return $this;
 	}
 }
 

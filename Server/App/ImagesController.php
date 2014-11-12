@@ -86,6 +86,9 @@ class ImagesController extends Controller {
 							$pcamImage['camera_model']['camera_vector'][0],
 							$pcamImage['camera_model']['camera_vector'][1],
 							$pcamImage['camera_model']['camera_vector'][2],
+							$pcamImage['camera_model']['camera_origin'][0],
+							$pcamImage['camera_model']['camera_origin'][1],
+							$pcamImage['camera_model']['camera_origin'][2],
 							$pcamImage['dimensions']['area'][0],
 							$pcamImage['dimensions']['area'][1],
 							$mission,
@@ -103,5 +106,21 @@ class ImagesController extends Controller {
 	 */
 	public function action_getImages($limit, $sort){
 		return Image::getImages($limit, $sort);
+	}
+
+	/**
+	 * @param int $image
+	 * @return array
+	 */
+	public function action_getSameLocationImages($image){
+		return Image::getSameLocationImages($image);
+	}
+
+	/**
+	 * @param Model\Image $image
+	 * @return mixed
+	 */
+	public function action_viewImage($image){
+		return $image->viewImage();
 	}
 }

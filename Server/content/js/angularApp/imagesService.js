@@ -34,9 +34,9 @@ angular.module('imagesService', [])
 					this.busy = true;
 				} else {
 					for (var i = 0; i < data.length; i++) {
-						/*
+
 						// Set post date
-						var t = (data[i].approveDate).split(/[- :]/);
+						var t = (data[i].created_on).split(/[- :]/);
 						var approveDate = new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]).getTime();
 						var today = new Date().getTime();
 						var timeDiff = today-approveDate;
@@ -48,7 +48,7 @@ angular.module('imagesService', [])
 							data[i].daysAgo = daysAgo + " days ago";
 						} else {
 							data[i].daysAgo = Math.floor(daysAgo/365) + " years ago";
-						}*/
+						}
 
 						this.items.push(data[i]);
 					}
