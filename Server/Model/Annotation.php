@@ -87,9 +87,15 @@ class Annotation extends DataObject {
 	 * @return Annotation
 	 */
 	public static function annotateImage($image, $annotationBlob, $category){
+		/*if (gettype($annotationBlob) == 'string'){
+			$annotationBlob = json_decode($annotationBlob);
+		}
+
+		return $annotationBlob;*/
+
 		$annotation = new self();
 		$annotation->imageId = $image;
-		$annotation->annotation = $annotationBlob;
+		$annotation->annotations = $annotationBlob;
 		$annotation->category = $category;
 
 		$annotation->save();

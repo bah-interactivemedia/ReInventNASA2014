@@ -12,7 +12,7 @@
 
 		<div class="images">
 			<div class="row">
-				<div masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".image"}' id="imageContainer" class="large-12 columns" infinite-scroll="images.nextPage();addthis.button('.addthis_button_compact');" infinite-scroll-distance="1" infinite-scroll-disabled='images.busy'>
+				<div masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".image"}' id="imageContainer" class="large-12 columns" infinite-scroll="images.nextPage();" infinite-scroll-distance="1" infinite-scroll-disabled='images.busy'>
 					<div image-tile class="image {{image | getSizeClass}} {{image | getIsSortedByFeatured}}" ng-repeat="image in images.items">
 						<img alt="{{image.message}}" tabindex="0" ng-mouseover="showOverlay(image)" ng-enter="openImageModal(image, $index)" ng-click="openImageModal(image, $index)" ng-src="{{image.url}}" ng-src-responsive="[['(max-width:40em)', '{{image.url}}']]"/>
 						<div class="imageOverlay">
