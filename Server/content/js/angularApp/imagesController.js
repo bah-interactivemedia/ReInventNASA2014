@@ -92,7 +92,7 @@ angular.module('controllers', [])
 			var modalInstance = $modal.open({
 				templateUrl: 'imageModal.html',
 				controller: ImageModal,
-				windowClass: 'tiny ngModalHolder',
+				windowClass: 'small ngModalHolder',
 				resolve: {
 					image: function(){
 						return image;
