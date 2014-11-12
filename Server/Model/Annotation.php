@@ -32,7 +32,7 @@ class Annotation extends DataObject {
 		// #BEGIN DEFAULTS
 		$this->createColumn('id', DATATYPE_INT, NULL, true, 0);
 		$this->createColumn('imageId', DATATYPE_INT, NULL, true, 0);
-		$this->createColumn('annotations', DATATYPE_BINARY, NULL, false, 65536);
+		$this->createColumn('annotations', DATATYPE_JSON, NULL, false, 65536);
 		$this->createColumn('category', DATATYPE_STRING, NULL, false, 100);
 
 		// Foreign Key Lookups
@@ -95,10 +95,12 @@ class Annotation extends DataObject {
 
 		$annotation = new self();
 		$annotation->imageId = $image;
-		$annotation->annotations = $annotationBlob;
+		$annotation->annotations = array($annotationBlob);
 		$annotation->category = $category;
 
 		$annotation->save();
+
+		return $annotation;
 
 		App::getDBO()->prepare('SELECT * FROM images WHERE id = '.$image);
 		$imageRecord = App::getDBO()->execute()->fetch(\PDO::FETCH_ASSOC);
