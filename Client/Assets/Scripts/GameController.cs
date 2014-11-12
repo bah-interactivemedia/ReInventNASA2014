@@ -57,9 +57,9 @@ public class GameController : MonoBehaviour {
 		} else {
 			var mark = selectedImage.FindChild("Mark");
 			mark.gameObject.SetActive(true);
-			DeselectImage();
 			ImageMetadata md = selectedImage.GetComponent<ImageMetadata> ();
 			md.SubmitTag (imgTag);
+			DeselectImage();
 		}
 	}
 

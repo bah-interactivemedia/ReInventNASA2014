@@ -33,7 +33,9 @@ public class ImageMetadata : MonoBehaviour {
 			print ("unsuppported tag");
 			yield break;
 		}
-		WWW req = new WWW (ImageLoader.ENDPOINT + "/annotations/annotateImage?image=" + Id () + "&annotationBlob=&category=" + category);
+		string url = ImageLoader.ENDPOINT + "annotations/annotateImage?image=" + Id () + "&annotationBlob=&category=" + category;
+		print (url);
+		WWW req = new WWW (url);
 		yield return req;
 	}
 }
