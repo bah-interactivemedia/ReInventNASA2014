@@ -4,6 +4,9 @@ using InControl;
 
 public class LineAttribute : MonoBehaviour {
 	public GameController controller;
+
+	public Transform tl;
+	public Transform br;
 	
 	// Update is called once per frame
 	void Update () {
@@ -32,5 +35,28 @@ public class LineAttribute : MonoBehaviour {
 		if (inputDevice.RightStickY > 0 || this.transform.localScale.x > 0.05f){
 			this.transform.localScale += new Vector3(Time.deltaTime * inputDevice.RightStickY,0,0);
 		}
+
+//		TestEdges ();
+	}
+
+	void TestEdges () {
+		tl.transform.position = TopLeft ();
+		br.transform.position = BottomRight ();
+	}
+
+	public Vector3 TopLeft() {
+		Vector3 p = transform.position;
+		var zRotation = this.transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+		var xScale = this.transform.localScale.x;
+		var o = new Vector3 (Mathf.Cos (zRotation), Mathf.Sin(zRotation), 0) * -xScale/2;
+		return p + o;
+	}
+
+	public Vector3 BottomRight() {
+		Vector3 p = transform.position;
+		var zRotation = this.transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+		var xScale = this.transform.localScale.x;
+		var o = new Vector3 (Mathf.Cos (zRotation), Mathf.Sin(zRotation), 0) * xScale/2;
+		return p + o;
 	}
 }
