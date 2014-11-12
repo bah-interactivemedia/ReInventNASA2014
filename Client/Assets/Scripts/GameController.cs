@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 	public enum GameState{
 		imageView,
-		imageSelected
+		imageSelected,
+		addLineAttribute
 	}
 
 	public Transform targetImagePosition;
@@ -46,7 +47,12 @@ public class GameController : MonoBehaviour {
 		state = GameState.imageView;
 		var mark = selectedImage.FindChild("Mark");
 		mark.gameObject.SetActive(true);
-		DeselectImage();
+
+		if (imgTag == 1){
+			state = GameState.addLineAttribute;
+		} else {
+			DeselectImage();
+		}
 	}
 
 	public void CancelTag(){
