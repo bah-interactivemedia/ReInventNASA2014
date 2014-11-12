@@ -7,9 +7,9 @@ public class ImageDisplay : MonoBehaviour {
 	private float MinDepth = 13;
 	private float MaxDepth = 13;
 	private int RowCount = 4;
-	private int ColCount = 8;
+	private int ColCount = 7;
 
-	private float width = 160;
+	private float width = 140;
 	private float height = 18;
 
 	private float gridSizeX;
@@ -31,8 +31,8 @@ public class ImageDisplay : MonoBehaviour {
 		objectLocations = new Dictionary<GameObject, Vector2>();
 		Initialize ();
 
-		imageLoader.LoadRandomImages ((string imageUrl) => {
-			StartCoroutine(LoadOneImage (imageUrl));
+		imageLoader.LoadRandomImages ((string imageUrl, Dictionary<string, object> metadata) => {
+			StartCoroutine(LoadOneImage (imageUrl, metadata));
 		}, RowCount * ColCount);
 	}
 	
@@ -56,9 +56,9 @@ public class ImageDisplay : MonoBehaviour {
 		gridSizeY = gridSizeX;
 	}
 
-	IEnumerator LoadOneImage(string url) {
+	IEnumerator LoadOneImage(string url, Dictionary<string, object> metadata) {
 		if (AnyEmptyLocations ()) {
-			GameObject go = imageLoader.CreateGameObject ();
+			GameObject go = imageLoader.CreateGameObject (metadata);
 			WWW www = new WWW (url);
 			yield return www;
 

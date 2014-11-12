@@ -41,12 +41,15 @@ public class GameController : MonoBehaviour {
 
 	}
 
+	// blueberries, layered, bright rocks
 	public void ImageTagged(int imgTag = 0){
 		Debug.Log("Tagged!");
 		state = GameState.imageView;
 		var mark = selectedImage.FindChild("Mark");
 		mark.gameObject.SetActive(true);
 		DeselectImage();
+		ImageMetadata md = selectedImage.GetComponent<ImageMetadata> ();
+		md.SubmitTag (imgTag);
 	}
 
 	public void CancelTag(){
