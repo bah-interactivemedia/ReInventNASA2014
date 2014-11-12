@@ -7,6 +7,8 @@ namespace Model;
 use Mudpuppy\DataObject;
 use Mudpuppy\App;
 use Aws\Sqs\SqsClient;
+use Aws\S3\S3Client;
+use Aws\S3\Enum\CannedAcl;
 
 defined('MUDPUPPY') or die('Restricted');
 
@@ -92,7 +94,7 @@ class Annotation extends DataObject {
 
 		$annotation->save();
 
-		App::getDBO()->prepare('SELECT * FROM images WHERE imageId = '.$image);
+		App::getDBO()->prepare('SELECT * FROM images WHERE id = '.$image);
 		$imageRecord = App::getDBO()->execute()->fetch(\PDO::FETCH_ASSOC);
 		$url = $imageRecord['url'];
 		$imageId = $imageRecord['imageID']."_".$annotation->id;
@@ -112,6 +114,42 @@ class Annotation extends DataObject {
 			'QueueUrl'    => 'https://sqs.us-west-1.amazonaws.com/026164944188/bah-reinvent-img-proc',
 			'MessageBody' => json_encode($sqsMessage)
 		));
+
+		/*$s3Client = S3Client::factory(array(
+			'key' => 'AKIAJEPFUBJF5RGBL5AQ',
+			'secret' => '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',
+			'region' => 'us-west-1'
+		));
+
+		// Create image
+		$image = imagecreatefromjpeg($url);
+
+		// Create color
+		$yellow = imagecolorallocate($image, 255, 243, 96);
+
+		// Loop through annotations
+		foreach($annotationBlob as $annotation){
+			// Check for rectangle or line annotation
+			if ($annotation[0] == 'rect'){
+				// Draw rectangle for rectangle annotations
+				imagerectangle($image, $annotation[1], $annotation[2], $annotation[3], $annotation[4], $yellow);
+			} else {
+				// Draw line for line annotations
+				imageline($image, $annotation[1], $annotation[2], $annotation[3], $annotation[4], $yellow);
+			}
+		}
+
+		imagejpeg($image,"/tmp/processedImage_".$imageId.".jpg",90);
+
+		$upload = $s3Client->putObject(array(
+			'Bucket' => 'bah-reinvent-processed-images',
+			'Key'    => $imageId.".jpg",
+			'Body'   => file_get_contents("/tmp/processedImage_".$imageId.".jpg"),
+			'ACL'	 => CannedAcl::PUBLIC_READ,
+			'ContentType' => 'image/jpeg'
+		));
+
+		imagedestroy($image);*/
 
 		return $annotation;
 	}

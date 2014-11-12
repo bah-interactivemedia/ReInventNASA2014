@@ -30,7 +30,7 @@ try {
 	$image = imagecreatefromjpeg($imageURL);
 
 	// Create color
-	$yellow = imagecolorallocate($image, 255, 255, 255);
+	$yellow = imagecolorallocate($image, 255, 243, 96);
 
 	// Loop through annotations
 	foreach($annotations as $annotation){
@@ -44,19 +44,17 @@ try {
 		}
 	}
 
-	// Save image
 	imagejpeg($image,"/tmp/processedImage_".$imageID.".jpg",90);
 
-	// Destroy image
-	imagedestroy($image);
-
-	// Upload image to S3
 	$upload = $s3Client->putObject(array(
 		'Bucket' => 'bah-reinvent-processed-images',
 		'Key'    => $imageID.".jpg",
 		'Body'   => file_get_contents("/tmp/processedImage_".$imageID.".jpg"),
-		'ACL'	 => CannedAcl::PUBLIC_READ
+		'ACL'	 => CannedAcl::PUBLIC_READ,
+		'ContentType' => 'image/jpeg'
 	));
+
+	imagedestroy($image);
 
 	// Output header
 	ob_start();
