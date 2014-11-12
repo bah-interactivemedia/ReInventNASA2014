@@ -144,8 +144,12 @@ class Image extends DataObject {
 		App::getDBO()->prepare('SELECT MIN(id) as minID, MAX(id) as maxID FROM images');
 		$maxAndMin = App::getDBO()->execute()->fetch(\PDO::FETCH_ASSOC);
 
-		for($i = 0; $i < $limit; $i++){
-			array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
+		$bounds = $limit*4;
+
+		for($i = 0; $i < $bounds; $i++){
+			if (count($idArray) < $limit){
+				array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
+			}
 		}
 
 		if ($sort == 'all'){

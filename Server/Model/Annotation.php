@@ -6,6 +6,7 @@
 namespace Model;
 use Mudpuppy\DataObject;
 use Mudpuppy\App;
+use Aws\Sqs\SqsClient;
 
 defined('MUDPUPPY') or die('Restricted');
 
@@ -80,6 +81,7 @@ class Annotation extends DataObject {
 	/**
 	 * @param $image
 	 * @param $annotationBlob
+	 * @param $category
 	 * @return Annotation
 	 */
 	public static function annotateImage($image, $annotationBlob, $category){
@@ -89,6 +91,27 @@ class Annotation extends DataObject {
 		$annotation->category = $category;
 
 		$annotation->save();
+
+		App::getDBO()->prepare('SELECT * FROM images WHERE imageId = '.$image);
+		$imageRecord = App::getDBO()->execute()->fetch(\PDO::FETCH_ASSOC);
+		$url = $imageRecord['url'];
+		$imageId = $imageRecord['imageID']."_".$annotation->id;
+
+		// Setup SQS Client
+		$sqsClient = SQSClient::factory(array(
+			'key' => $_SERVER['AWS_ACCESS_KEY_ID'],
+			'secret' => $_SERVER['AWS_SECRET_KEY'],
+			'region' => 'us-west-1'
+		));
+
+		// Create the SQS Message
+		$sqsMessage = array("imageID"=>$imageId,"image"=>$url,"annotations"=>$annotationBlob);
+
+		// Call SQS to process image
+		$sqsClient->sendMessage(array(
+			'QueueUrl'    => 'https://sqs.us-west-1.amazonaws.com/026164944188/bah-reinvent-img-proc',
+			'MessageBody' => json_encode($sqsMessage)
+		));
 
 		return $annotation;
 	}
