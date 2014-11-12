@@ -19,6 +19,8 @@ public class GameController : MonoBehaviour {
 	private Vector3 selectedImageOrig;
 	private Vector3 selectedImageRot;
 
+	private Transform line;
+
 	[HideInInspector]
 	public GameState state { 
 		get {
@@ -85,14 +87,39 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void startLineEdit(){
-		var line = (Transform) Instantiate(linePrefab);
+		line = (Transform) Instantiate(linePrefab);
+		line.GetComponent<LineAttribute>().controller = this;
 		line.parent = selectedImage;
 		line.transform.localPosition = new Vector3(0,0,-.1f);
 	}
 
+	public void endLineEdit(){
+		// DO Line Commit stuff here
+		var mark = selectedImage.FindChild("Mark");
+		mark.gameObject.SetActive(true);
+		DeselectImage();
+		line = null;
+	}
+
+	public void cancelLineEdit(){
+		DeselectImage();
+		state = GameState.imageView;
+		line = null;
+	}
+
 	public void DeselectImage(){
+		if (line != null){
+			Destroy(line.gameObject);
+		}
+
 		radialMenu.SetActive(false);
 		if (selectedImage != null){
+			var canvas = selectedImage.FindChild("Canvas");
+
+			if (canvas != null){
+				canvas.gameObject.SetActive(false);
+			}
+
 			Go.to(selectedImage, .66f, new GoTweenConfig()
 			      .position(selectedImageOrig)
 			      .rotation(selectedImageRot));

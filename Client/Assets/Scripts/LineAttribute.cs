@@ -3,15 +3,17 @@ using System.Collections;
 using InControl;
 
 public class LineAttribute : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
+	public GameController controller;
 	
 	// Update is called once per frame
 	void Update () {
 		var inputDevice = InputManager.ActiveDevice;
+
+		if (inputDevice.Action1.WasReleased){
+			controller.endLineEdit();
+		} else if (inputDevice.Action2.WasReleased){
+			controller.cancelLineEdit();
+		}
 
 		var zRotation = this.transform.rotation.eulerAngles.z;
 
