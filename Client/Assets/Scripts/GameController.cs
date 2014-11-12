@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour {
 	public Transform targetImagePosition;
 	public GameObject radialMenu;
 
+	public Transform linePrefab;
+
 	[HideInInspector]
 	public Transform selectedImage;
 	private Vector3 selectedImageOrig;
@@ -45,12 +47,15 @@ public class GameController : MonoBehaviour {
 	public void ImageTagged(int imgTag = 0){
 		Debug.Log("Tagged!");
 		state = GameState.imageView;
-		var mark = selectedImage.FindChild("Mark");
-		mark.gameObject.SetActive(true);
 
 		if (imgTag == 1){
 			state = GameState.addLineAttribute;
+			var canvas = selectedImage.FindChild("Canvas");
+			canvas.gameObject.SetActive(true);
+			startLineEdit();
 		} else {
+			var mark = selectedImage.FindChild("Mark");
+			mark.gameObject.SetActive(true);
 			DeselectImage();
 		}
 	}
@@ -74,6 +79,12 @@ public class GameController : MonoBehaviour {
 		      .onComplete(thisTransform => {
 			radialMenu.SetActive(true);
 		}));
+	}
+
+	public void startLineEdit(){
+		var line = (Transform) Instantiate(linePrefab);
+		line.parent = selectedImage;
+		line.transform.localPosition = new Vector3(0,0,-.1f);
 	}
 
 	public void DeselectImage(){

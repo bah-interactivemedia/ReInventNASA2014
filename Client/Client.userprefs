@@ -1,18 +1,25 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/LineAttribute.cs">
     <Files>
       <File FileName="Assets/Scripts/InputController.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/InteractionTarget.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameController.cs" Line="48" Column="19" />
+      <File FileName="Assets/Scripts/GameController.cs" Line="87" Column="54" />
       <File FileName="Assets/Scripts/MenuInput.cs" Line="28" Column="47" />
       <File FileName="Assets/Scripts/NASAMenuItem.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Layout/ImageDisplay.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/LineAttribute.cs" Line="16" Column="96" />
+      <File FileName="Assets/Scripts/LineAttribute.cs" Line="18" Column="48" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True" />
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="Scripts" expanded="True">
+              <Node name="Layout" expanded="True" />
+              <Node name="LineAttribute.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
