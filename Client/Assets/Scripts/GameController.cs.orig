@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour {
 	public void ImageTagged(int imgTag = 0){
 		Debug.Log("Tagged!");
 		state = GameState.imageView;
+<<<<<<< HEAD
 
 		if (imgTag == 1){
 			state = GameState.addLineAttribute;
@@ -59,11 +60,13 @@ public class GameController : MonoBehaviour {
 			mark.gameObject.SetActive(true);
 			DeselectImage();
 		}
+=======
 		var mark = selectedImage.FindChild("Mark");
 		mark.gameObject.SetActive(true);
 		DeselectImage();
 		ImageMetadata md = selectedImage.GetComponent<ImageMetadata> ();
 		md.SubmitTag (imgTag);
+>>>>>>> 6824ea4e2c71f75ce10cf1bde1077e880d752620
 	}
 
 	public void CancelTag(){

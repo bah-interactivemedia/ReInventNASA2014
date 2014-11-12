@@ -31,7 +31,11 @@
 - image: int
 
 ###POST Annotation
-/annotations/annotateImage?image=[**image**]&annotationBlob=[**annotationBlob**]
+/annotations/annotateImage?image=[**image**]&annotationBlob=[**annotationBlob**]&category=[**category**]
 
 - image: int
 - annotationBlob: string
+- category
+	- layered
+	- blueberries
+	- brightRocks
