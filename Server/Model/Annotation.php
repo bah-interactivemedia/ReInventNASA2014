@@ -100,7 +100,7 @@ class Annotation extends DataObject {
 		$imageId = $imageRecord['imageID']."_".$annotation->id;
 
 		// Setup SQS Client
-		/*$sqsClient = SQSClient::factory(array(
+		$sqsClient = SQSClient::factory(array(
 			'key' => $_SERVER['AWS_ACCESS_KEY_ID'],
 			'secret' => $_SERVER['AWS_SECRET_KEY'],
 			'region' => 'us-west-1'
@@ -113,9 +113,9 @@ class Annotation extends DataObject {
 		$sqsClient->sendMessage(array(
 			'QueueUrl'    => 'https://sqs.us-west-1.amazonaws.com/026164944188/bah-reinvent-img-proc',
 			'MessageBody' => json_encode($sqsMessage)
-		));*/
+		));
 
-		$s3Client = S3Client::factory(array(
+		/*$s3Client = S3Client::factory(array(
 			'key' => $_SERVER['AWS_ACCESS_KEY_ID'],
 			'secret' => $_SERVER['AWS_SECRET_KEY'],
 			'region' => 'us-west-1'
@@ -149,7 +149,7 @@ class Annotation extends DataObject {
 			'ContentType' => 'image/jpeg'
 		));
 
-		imagedestroy($image);
+		imagedestroy($image);*/
 
 		return $annotation;
 	}
