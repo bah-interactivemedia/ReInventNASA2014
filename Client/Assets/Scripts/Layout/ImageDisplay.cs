@@ -20,6 +20,8 @@ public class ImageDisplay : MonoBehaviour {
 
 	public ImageLoader imageLoader;
 
+	public Transform playerOrigin;
+
 	// Use this for initialization
 	void Start () {
 //		height = ((float)width) / ColCount * RowCount;
@@ -60,7 +62,7 @@ public class ImageDisplay : MonoBehaviour {
 		locationMap [row, col] = go;
 		objectLocations [go] = new Vector2 (col, row);
 
-		float x = Mathf.Deg2Rad * ((ColCount-1f) / 2.0f - col) / ColCount * 2 * width;
+		float x = Mathf.Deg2Rad * ((ColCount-1f) / 2.0f - col) / ColCount * 2 * width + Mathf.PI/2;
 		float y = ((RowCount-1f) / 2.0f - row) / RowCount * height;
 		float depth = MinDepth + Random.value * (MaxDepth - MinDepth);
 
@@ -68,7 +70,7 @@ public class ImageDisplay : MonoBehaviour {
 		Vector3 p = new Vector3 (Mathf.Cos (x), 0, Mathf.Sin (x));
 		p *= depth;
 		p.y = y;
-		go.transform.position = p;
+		go.transform.localPosition = p;
 
 		go.transform.rotation = Quaternion.LookRotation(go.transform.position - transform.position);
 
