@@ -115,4 +115,12 @@ class ImagesController extends Controller {
 	public function action_getSameLocationImages($image){
 		return Image::getSameLocationImages($image);
 	}
+
+	/**
+	 * @param Model\Image $image
+	 * @return mixed
+	 */
+	public function action_viewImage($image){
+		return $image->viewImage();
+	}
 }

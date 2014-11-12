@@ -39,15 +39,17 @@ public class MenuInput : MonoBehaviour {
 			direction = NASAMenuItem.RadialDirection.left;
 		}
 
-		Debug.Log(inputDevice.LeftStickX + ", " + inputDevice.LeftStickY + " : " + direction);
+		//Debug.Log(inputDevice.LeftStickX + ", " + inputDevice.LeftStickY + " : " + direction);
 
 		for (int i = 0; i < menuItems.Length; i++){
 			if(menuItems[i].direction == direction){
 				buttons[i].Select();
+				selectedButton = buttons[i];
 			}
 		}
 
 		if (inputDevice.Action1.WasPressed && selectedButton != null) {
+			Debug.Log("Invoking");
 			selectedButton.onClick.Invoke();
 		}
 	}
