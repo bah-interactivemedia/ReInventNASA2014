@@ -147,15 +147,12 @@ class Image extends DataObject {
 		$bounds = $limit*4;
 
 		for($i = 0; $i < $bounds; $i++){
-			if (count($idArray) < $limit){
-				array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
-			}
+			array_push($idArray, rand($maxAndMin['minID'],$maxAndMin['maxID']));
 		}
 
 		if ($sort == 'all'){
-			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024');
+			App::getDBO()->prepare('SELECT * FROM images WHERE id IN ('.implode(",",$idArray).') AND width = 1024 AND height = 1024 LIMIT '.$limit);
 		} else {
-			$orderByClause = "";
 			$offsetClause = "";
 
 			if ($offset != null){
