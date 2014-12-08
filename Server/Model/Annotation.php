@@ -120,7 +120,7 @@ class Annotation extends DataObject {
 
 		// Call SQS to process image
 		$sqsClient->sendMessage(array(
-			'QueueUrl'    => 'https://sqs.us-west-1.amazonaws.com/026164944188/bah-reinvent-img-proc',
+			'QueueUrl'    => 'https://sqs.us-east-1.amazonaws.com/058880632172/NASA-JPL',
 			'MessageBody' => json_encode($sqsMessage)
 		));
 
