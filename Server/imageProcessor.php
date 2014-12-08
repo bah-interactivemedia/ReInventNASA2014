@@ -15,7 +15,7 @@ $s3Client = S3Client::factory(array(
 $sqsClient = SQSClient::factory(array(
 	'key' => $_SERVER['AWS_ACCESS_KEY_ID'],
 	'secret' => $_SERVER['AWS_SECRET_KEY'],
-	'region' => 'us-west-1'
+	'region' => 'us-east-1'
 ));
 
 $messageJSON = file_get_contents("php://input");
@@ -50,7 +50,7 @@ try {
 	imagejpeg($image,"/tmp/processedImage_".$imageId.".jpg",90);
 
 	$upload = $s3Client->putObject(array(
-		'Bucket' => 'bah-reinvent-processed-images',
+		'Bucket' => 'nasa-jpl',
 		'Key'    => $imageId.".jpg",
 		'Body'   => file_get_contents("/tmp/processedImage_".$imageId.".jpg"),
 		'ACL'	 => CannedAcl::PUBLIC_READ,
