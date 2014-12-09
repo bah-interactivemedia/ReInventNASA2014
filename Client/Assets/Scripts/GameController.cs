@@ -151,6 +151,8 @@ public class GameController : MonoBehaviour {
 			Destroy(rectangle.gameObject);
 		}
 
+		state = GameState.imageView;
+
 		radialMenu.SetActive(false);
 		if (selectedImage != null){
 			selectedImage.GetComponent<ImageView>().HideMessage();

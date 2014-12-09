@@ -6,7 +6,7 @@ public class ImageLoader : MonoBehaviour {
 
 	public const float ImageScale = 1/100f;
 	public GameObject prefabImage;
-	public const string ENDPOINT = "http://bah-reinvent.elasticbeanstalk.com/";
+	public const string ENDPOINT = "http://nasa-jpl.elasticbeanstalk.com/";
 
 	// Use this for initialization
 	void Start () {
