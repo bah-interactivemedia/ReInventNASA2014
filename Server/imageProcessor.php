@@ -15,7 +15,7 @@ $s3Client = S3Client::factory(array(
 $sqsClient = SQSClient::factory(array(
 	'key' => $_SERVER['AWS_ACCESS_KEY_ID'],
 	'secret' => $_SERVER['AWS_SECRET_KEY'],
-	'region' => 'us-west-1'
+	'region' => 'us-east-1'
 ));
 
 $messageJSON = file_get_contents("php://input");
@@ -40,17 +40,17 @@ try {
 		// Check for rectangle or line annotation
 		if ($annotation[0] == 'rect'){
 			// Draw rectangle for rectangle annotations
-			imagerectangle($image, $annotation[1], $annotation[2], $annotation[3], $annotation[4], $yellow);
+			imagerectangle($image, floatval($annotation[1]), floatval($annotation[2]), floatval($annotation[3]), floatval($annotation[4]), $yellow);
 		} else {
 			// Draw line for line annotations
-			imageline($image, $annotation[1], $annotation[2], $annotation[3], $annotation[4], $yellow);
+			imageline($image, floatval($annotation[1]), floatval($annotation[2]), floatval($annotation[3]), floatval($annotation[4]), $yellow);
 		}
 	}
 
 	imagejpeg($image,"/tmp/processedImage_".$imageId.".jpg",90);
 
 	$upload = $s3Client->putObject(array(
-		'Bucket' => 'bah-reinvent-processed-images',
+		'Bucket' => 'nasa-jpl',
 		'Key'    => $imageId.".jpg",
 		'Body'   => file_get_contents("/tmp/processedImage_".$imageId.".jpg"),
 		'ACL'	 => CannedAcl::PUBLIC_READ,

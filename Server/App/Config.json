@@ -14,7 +14,7 @@
 		},
 		"dbHost":{
 			"type":"constant",
-			"value":"aa1gov4n96jh07v.c3t30gtwvmbv.us-west-1.rds.amazonaws.com"
+			"value":"aall40sovhu3ex.cxeyoa7zavg2.us-east-1.rds.amazonaws.com"
 		},
 		"dbPort":{
 			"type":"constant",
